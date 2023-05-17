@@ -1,4 +1,4 @@
-import 'package:multiple_result/multiple_result.dart';
+import 'package:result_dart/result_dart.dart';
 
 abstract class ValueObject<T> {
   final T value;
@@ -17,4 +17,7 @@ abstract class ValueObject<T> {
 
   @override
   int get hashCode => value.hashCode;
+
+  @override
+  String toString() => '$runtimeType: $value';
 }

@@ -10,14 +10,12 @@ void main() {
 
     test('should generate valid Id when none was passed', () {
       final item = IdVO(null);
-      expect(item.value, isNot(''));
-      expect(item.value.length, isNot(0));
+      expect(item.value.length, equals(20));
     });
 
     test('should generate valid Id when empty string was passed', () {
       final item = IdVO('');
-      expect(item.value, isNot(''));
-      expect(item.value.length, isNot(0));
+      expect(item.value.length, equals(20));
     });
 
     test('should be equal if same value', () {

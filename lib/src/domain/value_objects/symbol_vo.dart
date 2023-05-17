@@ -1,5 +1,5 @@
+import 'package:result_dart/result_dart.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/value_object.dart';
-import 'package:multiple_result/multiple_result.dart';
 
 class SymbolVO extends ValueObject<String> {
   SymbolVO(String value)
@@ -7,5 +7,5 @@ class SymbolVO extends ValueObject<String> {
 
   @override
   Result<SymbolVO, String> validate() =>
-      value.length < 3 ? const Error('Ativo inválido') : Success(this);
+      value.length >= 3 ? Success(this) : const Failure('Ativo inválido');
 }
