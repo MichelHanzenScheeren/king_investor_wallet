@@ -28,13 +28,13 @@ void main() {
       expect(value, equals(-17));
     });
 
-    test('should return null if double value was passed', () {
-      final value = integerExtractor(2.5);
+    test('should return null if null was passed', () {
+      final value = integerExtractor(null);
       expect(value, isNull);
     });
 
-    test('should return null if null was passed', () {
-      final value = integerExtractor(null);
+    test('should return null if double value was passed', () {
+      final value = integerExtractor(2.5);
       expect(value, isNull);
     });
 
@@ -48,7 +48,7 @@ void main() {
       expect(value, isNull);
     });
 
-    test('should return null if string with invalid value in was passed', () {
+    test('should return null if string with invalid value was passed', () {
       final value = integerExtractor('2a');
       expect(value, isNull);
     });

@@ -1,14 +1,14 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
 import 'package:result_dart/result_dart.dart';
 
 class Quote extends Entity {
-  final NumberVO price;
-  final NumberVO high;
-  final NumberVO low;
-  final NumberVO yearHigh;
-  final NumberVO yearLow;
+  final PositiveNumberVO price;
+  final PositiveNumberVO high;
+  final PositiveNumberVO low;
+  final PositiveNumberVO yearHigh;
+  final PositiveNumberVO yearLow;
   final NumberVO changePercentage;
   final NumberVO changePercentageMonth;
   final NumberVO changePercentageYear;

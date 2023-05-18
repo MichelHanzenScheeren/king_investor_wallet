@@ -3,7 +3,7 @@ import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 
 void main() {
   group('TextVO', () {
-    test('should keep valid string and be valid', () {
+    test('should save valid string and be valid', () {
       final item = TextVO('banco itaú');
       expect(item.value, equals('Banco Itaú'));
       expect(item.isValid, isTrue);

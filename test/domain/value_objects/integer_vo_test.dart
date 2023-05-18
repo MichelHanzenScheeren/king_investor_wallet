@@ -27,5 +27,18 @@ void main() {
       expect(item.isValid, isFalse);
       expect(item.validate().exceptionOrNull(), 'Número inteiro inválido');
     });
+
+    test('should be invalid when pass negative value by default', () {
+      final item = IntegerVO(-5);
+      expect(item.value, equals(-5));
+      expect(item.isValid, isFalse);
+      expect(item.validate().exceptionOrNull(), 'Número não pode ser negativo');
+    });
+
+    test('should be valid when pass negative value and constructor option', () {
+      final item = IntegerVO(-5, allowNegativeValues: true);
+      expect(item.value, equals(-5));
+      expect(item.isValid, isTrue);
+    });
   });
 }

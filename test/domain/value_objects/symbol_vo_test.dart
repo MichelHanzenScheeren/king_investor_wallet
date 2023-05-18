@@ -3,7 +3,7 @@ import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 
 void main() {
   group('SymbolVO', () {
-    test('should keep valid string unchanged', () {
+    test('should save valid string unchanged', () {
       final item = SymbolVO('ITUB3');
       expect(item.value, equals('ITUB3'));
     });
@@ -18,7 +18,7 @@ void main() {
       expect(item.value, equals('HGRU11'));
     });
 
-    test('should be uppercase', () {
+    test('should save uppercase', () {
       final item = SymbolVO('wege3');
       expect(item.value, equals('WEGE3'));
     });
@@ -31,6 +31,7 @@ void main() {
     test('should be invalid if invalid value was passed', () {
       final item = SymbolVO('');
       expect(item.isValid, isFalse);
+      expect(item.validate().exceptionOrNull(), equals('Símbolo inválido'));
     });
   });
 }
