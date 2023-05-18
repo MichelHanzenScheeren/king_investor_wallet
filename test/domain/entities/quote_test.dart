@@ -11,7 +11,7 @@ void main() {
     test('should be invalid when has invalid value', () {
       final item = invalidQuoteWithRandomId1;
       expect(item.isValid, isFalse);
-      expect(item.validate().exceptionOrNull(), equals('Valor inválido'));
+      expect(item.validate().exceptionOrNull(), equals('Número inválido'));
     });
 
     test('should be different when has different id', () {

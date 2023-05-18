@@ -1,8 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
+import 'package:result_dart/result_dart.dart';
+
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
-import 'package:result_dart/result_dart.dart';
 
 class Asset extends Entity {
   SymbolVO symbol;
@@ -10,6 +14,8 @@ class Asset extends Entity {
   TextVO name;
   TextVO country;
   AssetType type;
+  IntegerVO quantity;
+  NumberVO averagePrice;
 
   Asset({
     required super.id,
@@ -18,6 +24,8 @@ class Asset extends Entity {
     required this.name,
     required this.country,
     required this.type,
+    required this.quantity,
+    required this.averagePrice,
   });
 
   @override

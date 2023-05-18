@@ -14,5 +14,5 @@ class NumberVO extends ValueObject<double> {
 
   @override
   Result<NumberVO, String> validate() =>
-      _value != null ? Success(this) : const Failure('Valor inválido');
+      _value != null ? Success(this) : const Failure('Número inválido');
 }

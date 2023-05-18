@@ -37,7 +37,7 @@ void main() {
       final item = NumberVO(null);
       expect(item.value, equals(0.0));
       expect(item.isValid, isFalse);
-      expect(item.validate().exceptionOrNull(), equals('Valor inválido'));
+      expect(item.validate().exceptionOrNull(), equals('Número inválido'));
     });
 
     test('should pass empty string value as 0.0', () {

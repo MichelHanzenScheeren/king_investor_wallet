@@ -18,6 +18,16 @@ void main() {
       expect(value, equals(0.9));
     });
 
+    test('should return double if negative double was passed', () {
+      final value = numberExtractor(-1.15);
+      expect(value, equals(-1.15));
+    });
+
+    test('should return double if negative string valid double was passed', () {
+      final value = numberExtractor('-6');
+      expect(value, equals(-6));
+    });
+
     test('should return null if invalid string was passed', () {
       final value = numberExtractor('abc');
       expect(value, equals(null));
