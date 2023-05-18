@@ -15,30 +15,24 @@ void main() {
       expect(item.isValid, isTrue);
     });
 
+    test('should be valid when pass negative int value', () {
+      final item = IntegerVO(-18);
+      expect(item.value, equals(-18));
+      expect(item.isValid, isTrue);
+    });
+
     test('should be invalid when pass null', () {
       final item = IntegerVO(null);
       expect(item.value, equals(0));
       expect(item.isValid, isFalse);
+      const message = 'Número inteiro inválido';
+      expect(item.validate().exceptionOrNull(), equals(message));
     });
 
     test('should be invalid when pass double value', () {
       final item = IntegerVO(12.4);
       expect(item.value, equals(0));
       expect(item.isValid, isFalse);
-      expect(item.validate().exceptionOrNull(), 'Número inteiro inválido');
-    });
-
-    test('should be invalid when pass negative value by default', () {
-      final item = IntegerVO(-5);
-      expect(item.value, equals(-5));
-      expect(item.isValid, isFalse);
-      expect(item.validate().exceptionOrNull(), 'Número não pode ser negativo');
-    });
-
-    test('should be valid when pass negative value and constructor option', () {
-      final item = IntegerVO(-5, allowNegativeValues: true);
-      expect(item.value, equals(-5));
-      expect(item.isValid, isTrue);
     });
   });
 }
