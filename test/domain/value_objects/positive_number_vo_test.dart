@@ -23,5 +23,11 @@ void main() {
       const message = 'Número não pode ser negativo';
       expect(item.validate().exceptionOrNull(), equals(message));
     });
+
+    test('should return failure when call greaterThanZero and value == 0', () {
+      final item = PositiveNumberVO(0);
+      const message = 'Valor deve ser maior do que zero';
+      expect(item.greaterThanZero().exceptionOrNull(), equals(message));
+    });
   });
 }

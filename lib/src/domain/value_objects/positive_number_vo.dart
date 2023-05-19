@@ -15,4 +15,8 @@ class PositiveNumberVO extends NumberVO {
   Result<PositiveNumberVO, String> _localValidate() => super.value < 0
       ? const Failure('Número não pode ser negativo')
       : Success(this);
+
+  Result<PositiveNumberVO, String> greaterThanZero() => super.value <= 0
+      ? const Failure('Valor deve ser maior do que zero')
+      : Success(this);
 }
