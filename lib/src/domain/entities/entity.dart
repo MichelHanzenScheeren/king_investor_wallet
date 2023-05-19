@@ -2,13 +2,15 @@ import 'package:result_dart/result_dart.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 
 class Entity {
-  final IdVO id;
+  final IdVO _id;
 
-  Entity({required this.id});
+  Entity({required IdVO id}) : _id = id;
+
+  String get id => _id.value;
 
   bool get isValid => validate() is Success;
 
-  Result<Entity, String> validate() => id.validate().pure(this);
+  Result<Entity, String> validate() => _id.validate().pure(this);
 
   @override
   bool operator ==(covariant Entity other) {
