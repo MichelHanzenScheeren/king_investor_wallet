@@ -1,3 +1,5 @@
+import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:king_investor_wallet/src/domain/entities/asset_base.dart';
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
@@ -18,6 +20,20 @@ class AssetData extends AssetBase {
     required PositiveNumberVO averagePrice,
   })  : _quantity = quantity,
         _averagePrice = averagePrice;
+
+  AssetData.fromBase(
+      {required AssetBase assetBase,
+      required PositiveIntegerVO quantity,
+      required PositiveNumberVO averagePrice})
+      : this(
+          symbol: SymbolVO(assetBase.symbol),
+          currency: SymbolVO(assetBase.currency),
+          country: TextVO(assetBase.country),
+          name: TextVO(assetBase.name),
+          type: assetBase.type,
+          quantity: quantity,
+          averagePrice: averagePrice,
+        );
 
   int get quantity => _quantity.value;
   double get averagePrice => _averagePrice.value;

@@ -1,7 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:king_investor_wallet/src/domain/entities/asset_data.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
 import 'package:result_dart/result_dart.dart';
+import '../../mocks/domain/entities/assets_base.dart';
 import '../../mocks/domain/entities/assets_data.dart';
 
 const greaterThanZero = 'Valor deve ser maior do que zero';
@@ -17,6 +19,16 @@ void main() {
     test('should be invalid when created with invalid data', () {
       final item = invalidAssetDataWeg3NegativeQuantity();
       expect(item.isValid, isFalse);
+    });
+
+    test('should be valid when create with named parameter', () {
+      final item = AssetData.fromBase(
+        assetBase: validAssetBaseWeg3(),
+        averagePrice: PositiveNumberVO(50.0),
+        quantity: PositiveIntegerVO(15),
+      );
+      expect(item.isValid, isTrue);
+      expect(item, equals(validAssetDataWeg3()));
     });
 
     test('should not update when pass invalid qtd to registerPurchase', () {
