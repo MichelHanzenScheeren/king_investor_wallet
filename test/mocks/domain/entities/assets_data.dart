@@ -15,6 +15,18 @@ AssetData validAssetDataWeg3() => AssetData(
       quantity: PositiveIntegerVO(2),
     );
 
+AssetData validAssetDataWeg3WithSale() => AssetData(
+      symbol: SymbolVO('WEGE3.SAO'),
+      currency: SymbolVO('BRL'),
+      country: TextVO('Brazil'),
+      name: TextVO('WEG S.A.'),
+      type: AssetType.stock,
+      averagePrice: PositiveNumberVO(10.0),
+      quantity: PositiveIntegerVO(2),
+      quantitySold: PositiveIntegerVO(1),
+      averageSalePrice: PositiveNumberVO(15),
+    );
+
 AssetData invalidAssetDataWeg3NegativeQuantity() => AssetData(
       symbol: SymbolVO('WEGE3.SAO'),
       currency: SymbolVO('BRL'),

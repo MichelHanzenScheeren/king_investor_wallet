@@ -31,10 +31,32 @@ void main() {
       expect(item, equals(validAssetDataWeg3()));
     });
 
+    test('should have default values to sales when none was passed', () {
+      final item = validAssetDataWeg3();
+      expect(item.quantitySold, equals(0));
+      expect(item.averageSalePrice, equals(0.0));
+    });
+
+    test('should have default values to sales (named constructor)', () {
+      final item = AssetData.fromBase(
+        assetBase: validAssetBaseWeg3(),
+        averagePrice: PositiveNumberVO(50.0),
+        quantity: PositiveIntegerVO(15),
+      );
+      expect(item.quantitySold, equals(0));
+      expect(item.averageSalePrice, equals(0.0));
+    });
+
+    test('should save values when passed', () {
+      final item = validAssetDataWeg3WithSale();
+      expect(item.quantitySold, equals(1));
+      expect(item.averageSalePrice, equals(15));
+    });
+
     test('should not update when pass invalid qtd to registerPurchase', () {
       final item = validAssetDataWeg3();
       final response = item.registerPurchase(
-        purchasedQuantity: PositiveIntegerVO(0),
+        transactionQuantity: PositiveIntegerVO(0),
         price: PositiveNumberVO(10.4),
       );
       expect(response, isA<Failure>());
@@ -46,7 +68,7 @@ void main() {
     test('should not update when pass invalid price to registerPurchase', () {
       final item = validAssetDataWeg3();
       final response = item.registerPurchase(
-        purchasedQuantity: PositiveIntegerVO(2),
+        transactionQuantity: PositiveIntegerVO(2),
         price: PositiveNumberVO(0),
       );
       expect(response, isA<Failure>());
@@ -58,7 +80,7 @@ void main() {
     test('should update when pass valid data to registerPurchase', () {
       final item = validAssetDataWeg3();
       final response = item.registerPurchase(
-        purchasedQuantity: PositiveIntegerVO(6),
+        transactionQuantity: PositiveIntegerVO(6),
         price: PositiveNumberVO(20),
       );
       expect(response, isA<Success>());
@@ -68,7 +90,21 @@ void main() {
 
     test('should not update when pass invalid qtd to registerSale', () {
       final item = validAssetDataWeg3();
-      final response = item.registerSale(soldQuantity: PositiveIntegerVO(0));
+      final response = item.registerSale(
+        transactionQuantity: PositiveIntegerVO(0),
+        price: PositiveNumberVO(15.0),
+      );
+      expect(response, isA<Failure>());
+      expect(response.exceptionOrNull(), equals(greaterThanZero));
+      expect(item.quantity, equals(2));
+    });
+
+    test('should not update when pass invalid price to registerSale', () {
+      final item = validAssetDataWeg3();
+      final response = item.registerSale(
+        transactionQuantity: PositiveIntegerVO(1),
+        price: PositiveNumberVO(0),
+      );
       expect(response, isA<Failure>());
       expect(response.exceptionOrNull(), equals(greaterThanZero));
       expect(item.quantity, equals(2));
@@ -76,17 +112,25 @@ void main() {
 
     test('should not update when pass quantity bigger than current', () {
       final item = validAssetDataWeg3();
-      final response = item.registerSale(soldQuantity: PositiveIntegerVO(15));
+      final response = item.registerSale(
+        transactionQuantity: PositiveIntegerVO(15),
+        price: PositiveNumberVO(15.0),
+      );
       expect(response, isA<Failure>());
       expect(response.exceptionOrNull(), equals(greaterThanCurrent));
       expect(item.quantity, equals(2));
     });
 
-    test('should update value when pass valid quantity', () {
+    test('should update values when pass valid quantity', () {
       final item = validAssetDataWeg3();
-      final response = item.registerSale(soldQuantity: PositiveIntegerVO(1));
+      final response = item.registerSale(
+        transactionQuantity: PositiveIntegerVO(1),
+        price: PositiveNumberVO(15.0),
+      );
       expect(response, isA<Success>());
       expect(item.quantity, equals(1));
+      expect(item.quantitySold, equals(1));
+      expect(item.averageSalePrice, equals(15.0));
     });
   });
 }

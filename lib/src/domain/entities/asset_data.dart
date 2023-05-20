@@ -9,6 +9,8 @@ import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo
 class AssetData extends AssetBase {
   PositiveIntegerVO _quantity;
   PositiveNumberVO _averagePrice;
+  PositiveIntegerVO _quantitySold;
+  PositiveNumberVO _averageSalePrice;
 
   AssetData({
     required super.symbol,
@@ -18,13 +20,19 @@ class AssetData extends AssetBase {
     required super.type,
     required PositiveIntegerVO quantity,
     required PositiveNumberVO averagePrice,
+    PositiveIntegerVO? quantitySold,
+    PositiveNumberVO? averageSalePrice,
   })  : _quantity = quantity,
-        _averagePrice = averagePrice;
+        _averagePrice = averagePrice,
+        _quantitySold = quantitySold ?? PositiveIntegerVO(0),
+        _averageSalePrice = averageSalePrice ?? PositiveNumberVO(0.0);
 
   AssetData.fromBase(
       {required AssetBase assetBase,
       required PositiveIntegerVO quantity,
-      required PositiveNumberVO averagePrice})
+      required PositiveNumberVO averagePrice,
+      PositiveIntegerVO? quantitySold,
+      PositiveNumberVO? averageSalePrice})
       : this(
           symbol: SymbolVO(assetBase.symbol),
           currency: SymbolVO(assetBase.currency),
@@ -33,10 +41,14 @@ class AssetData extends AssetBase {
           type: assetBase.type,
           quantity: quantity,
           averagePrice: averagePrice,
+          quantitySold: quantitySold,
+          averageSalePrice: averageSalePrice,
         );
 
   int get quantity => _quantity.value;
   double get averagePrice => _averagePrice.value;
+  int get quantitySold => _quantitySold.value;
+  double get averageSalePrice => _averageSalePrice.value;
 
   @override
   Result<Entity, String> validate() {
@@ -48,18 +60,19 @@ class AssetData extends AssetBase {
   }
 
   Result<Entity, String> registerPurchase({
-    required PositiveIntegerVO purchasedQuantity,
+    required PositiveIntegerVO transactionQuantity,
     required PositiveNumberVO price,
   }) {
-    final validQuantity = _validateQuantity(purchasedQuantity);
+    final validQuantity = _validateQuantity(transactionQuantity);
     final validPrice = _validatePrice(price);
     if (validQuantity.isSuccess() && validPrice.isSuccess()) {
-      final currentTotal = _quantity.value * _averagePrice.value;
-      final purchasedTotal = purchasedQuantity.value * price.value;
-      final newTotal = currentTotal + purchasedTotal;
-      final newQuantity = _quantity.value + purchasedQuantity.value;
-      final newAverage = (newTotal) / (newQuantity);
-
+      final newQuantity = _quantity.value + transactionQuantity.value;
+      final newAverage = _calculateNewPrice(
+        _averagePrice.value,
+        _quantity.value,
+        price.value,
+        transactionQuantity.value,
+      );
       _quantity = PositiveIntegerVO(newQuantity);
       _averagePrice = PositiveNumberVO(newAverage);
     }
@@ -80,22 +93,53 @@ class AssetData extends AssetBase {
         .pure(this);
   }
 
+  double _calculateNewPrice(
+    double currentPrice,
+    int currentQuantity,
+    double transactionPrice,
+    int transactionQuantity,
+  ) {
+    final currentTotal = currentPrice * currentQuantity;
+    final transactionTotal = transactionPrice * transactionQuantity;
+    final newTotal = currentTotal + transactionTotal;
+    final newAverage = (newTotal) / (currentQuantity + transactionQuantity);
+    return newAverage;
+  }
+
   Result<Entity, String> registerSale({
-    required PositiveIntegerVO soldQuantity,
+    required PositiveIntegerVO transactionQuantity,
+    required PositiveNumberVO price,
   }) {
-    final validation = _validateSale(soldQuantity);
+    final validation = _validateSale(transactionQuantity, price);
     if (validation.isSuccess()) {
-      final newQuantity = _quantity.value - soldQuantity.value;
+      final newQuantity = _quantity.value - transactionQuantity.value;
       _quantity = PositiveIntegerVO(newQuantity);
+
+      final newSoldQuantity = _quantitySold.value + transactionQuantity.value;
+      final newAverageSoldPrice = _calculateNewPrice(
+        _averageSalePrice.value,
+        _quantitySold.value,
+        price.value,
+        transactionQuantity.value,
+      );
+      _quantitySold = PositiveIntegerVO(newSoldQuantity);
+      _averageSalePrice = PositiveNumberVO(newAverageSoldPrice);
     }
     return validation;
   }
 
-  Result<Entity, String> _validateSale(PositiveIntegerVO soldQuantity) {
-    final validation = _validateQuantity(soldQuantity);
-    if (validation.isError()) {
-      return validation;
-    } else if (soldQuantity.value > _quantity.value) {
+  Result<Entity, String> _validateSale(
+    PositiveIntegerVO soldAmount,
+    PositiveNumberVO price,
+  ) {
+    final quantityValidation = _validateQuantity(soldAmount);
+    final priceValidation = _validatePrice(price);
+
+    if (quantityValidation.isError()) {
+      return quantityValidation;
+    } else if (priceValidation.isError()) {
+      return priceValidation;
+    } else if (soldAmount.value > _quantity.value) {
       return const Failure('A quantidade vendida é maior do que a atual');
     } else {
       return Success(this);

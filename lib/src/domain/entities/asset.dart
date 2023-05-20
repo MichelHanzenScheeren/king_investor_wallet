@@ -18,8 +18,10 @@ class Asset extends AssetData {
     required super.type,
     required super.quantity,
     required super.averagePrice,
+    PositiveIntegerVO? quantitySold,
+    PositiveNumberVO? averageSalePrice,
     required this.quote,
-  });
+  }) : super(quantitySold: quantitySold, averageSalePrice: averageSalePrice);
 
   Asset.fromData({
     required AssetData assetData,
@@ -32,6 +34,8 @@ class Asset extends AssetData {
           type: assetData.type,
           quantity: PositiveIntegerVO(assetData.quantity),
           averagePrice: PositiveNumberVO(assetData.averagePrice),
+          quantitySold: PositiveIntegerVO(assetData.quantitySold),
+          averageSalePrice: PositiveNumberVO(assetData.averageSalePrice),
           quote: quote,
         );
 
