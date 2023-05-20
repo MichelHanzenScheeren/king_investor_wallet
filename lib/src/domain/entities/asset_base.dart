@@ -42,16 +42,21 @@ class AssetBase extends Entity {
         .pure(this);
   }
 
-  bool update({TextVO? name, AssetType? type}) {
-    bool updated = false;
-    if (name != null && name.isValid && name != _name) {
+  Result<Entity, String> update({TextVO? name, AssetType? type}) {
+    bool changed = false;
+    if (name != null && !name.isValid) {
+      return name.validate().pure(this);
+    }
+    if (name != null && name != _name) {
       _name = name;
-      updated = true;
+      changed = true;
     }
     if (type != null && type != _type) {
       _type = type;
-      updated = true;
+      changed = true;
     }
-    return updated;
+    return changed
+        ? Success(this)
+        : const Failure('Nenhuma informação modificada');
   }
 }
