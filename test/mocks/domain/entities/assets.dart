@@ -7,24 +7,35 @@ import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 
 import 'quotes.dart';
 
-final validAssetWeg3 = Asset(
-  symbol: SymbolVO('WEGE3.SAO'),
-  currency: SymbolVO('BRL'),
-  country: TextVO('Brazil'),
-  name: TextVO('WEG S.A'),
-  type: AssetType.stock,
-  quantity: PositiveIntegerVO(2),
-  averagePrice: PositiveNumberVO(20.5),
-  quote: validQuoteWithRandomId1(),
-);
+Asset validAssetWeg3() => Asset(
+      symbol: SymbolVO('WEGE3.SAO'),
+      currency: SymbolVO('BRL'),
+      country: TextVO('Brazil'),
+      name: TextVO('WEG S.A'),
+      type: AssetType.stock,
+      quantity: PositiveIntegerVO(2),
+      averagePrice: PositiveNumberVO(20.5),
+      quote: validQuoteWithRandomId1(),
+    );
 
-final invalidAssetWeg3 = Asset(
-  symbol: SymbolVO('WEGE3.SAO'),
-  currency: SymbolVO('BRL'),
-  country: TextVO('Brazil'),
-  name: TextVO('WEG S.A'),
-  type: AssetType.stock,
-  quantity: PositiveIntegerVO(-1),
-  averagePrice: PositiveNumberVO(20.5),
-  quote: invalidQuoteWithInvalidPrice(),
-);
+Asset invalidAssetWeg3() => Asset(
+      symbol: SymbolVO('WEGE3.SAO'),
+      currency: SymbolVO('BRL'),
+      country: TextVO('Brazil'),
+      name: TextVO('WEG S.A'),
+      type: AssetType.stock,
+      quantity: PositiveIntegerVO(-1),
+      averagePrice: PositiveNumberVO(20.5),
+      quote: invalidQuoteWithInvalidPrice(),
+    );
+
+Asset validAssetBaseHGRU11() => Asset(
+      symbol: SymbolVO('HGRU11.SAO'),
+      currency: SymbolVO('BRL'),
+      country: TextVO('Brazil'),
+      name: TextVO('CSHG Renda Urbana Fundo Investimento Imobiliário - FII'),
+      type: AssetType.reit,
+      averagePrice: PositiveNumberVO(12.0),
+      quantity: PositiveIntegerVO(8),
+      quote: validQuoteWithStaticId2(),
+    );

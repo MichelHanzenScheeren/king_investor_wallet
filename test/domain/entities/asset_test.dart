@@ -8,7 +8,7 @@ import '../../mocks/domain/entities/quotes.dart';
 void main() {
   group('Asset', () {
     test('should be valid when all values are valid', () {
-      final item = validAssetWeg3;
+      final item = validAssetWeg3();
       expect(item.isValid, isTrue);
     });
 
@@ -18,11 +18,11 @@ void main() {
         quote: validQuoteWithRandomId1(),
       );
       expect(item.isValid, isTrue);
-      expect(item, equals(validAssetWeg3));
+      expect(item, equals(validAssetWeg3()));
     });
 
     test('should be invalid when invalid data', () {
-      final item = invalidAssetWeg3;
+      final item = invalidAssetWeg3();
       expect(item.isValid, isFalse);
     });
   });
