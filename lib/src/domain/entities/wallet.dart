@@ -19,7 +19,7 @@ class Wallet extends Entity {
 
   String get name => _name.value;
   bool get isDefault => _isDefault;
-  List<Asset> get assets => _assets;
+  List<Asset> get assets => List<Asset>.unmodifiable(_assets);
 
   @override
   Result<Wallet, String> validate() {

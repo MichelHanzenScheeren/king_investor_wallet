@@ -10,9 +10,8 @@ import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo
 class AssetData extends AssetBase {
   PositiveIntegerVO _quantity;
   PositiveNumberVO _averagePrice;
-  PositiveIntegerVO _quantitySold;
-  PositiveNumberVO _averageSalePrice;
-  PositiveNumberVO _income;
+  PositiveNumberVO _totalSold;
+  PositiveNumberVO _totalIncomes;
 
   AssetData({
     required super.symbol,
@@ -22,22 +21,19 @@ class AssetData extends AssetBase {
     required super.type,
     required PositiveIntegerVO quantity,
     required PositiveNumberVO averagePrice,
-    PositiveIntegerVO? quantitySold,
-    PositiveNumberVO? averageSalePrice,
-    PositiveNumberVO? income,
+    PositiveNumberVO? totalSold,
+    PositiveNumberVO? totalIncomes,
   })  : _quantity = quantity,
         _averagePrice = averagePrice,
-        _quantitySold = quantitySold ?? PositiveIntegerVO(0),
-        _averageSalePrice = averageSalePrice ?? PositiveNumberVO(0.0),
-        _income = income ?? PositiveNumberVO(0.0);
+        _totalSold = totalSold ?? PositiveNumberVO(0.0),
+        _totalIncomes = totalIncomes ?? PositiveNumberVO(0.0);
 
-  AssetData.fromBase(
-      {required AssetBase assetBase,
-      required PositiveIntegerVO quantity,
-      required PositiveNumberVO averagePrice,
-      PositiveIntegerVO? quantitySold,
-      PositiveNumberVO? averageSalePrice})
-      : this(
+  AssetData.fromBase({
+    required AssetBase assetBase,
+    required PositiveIntegerVO quantity,
+    required PositiveNumberVO averagePrice,
+    PositiveNumberVO? totalSold,
+  }) : this(
           symbol: SymbolVO(assetBase.symbol),
           currency: SymbolVO(assetBase.currency),
           country: TextVO(assetBase.country),
@@ -45,15 +41,13 @@ class AssetData extends AssetBase {
           type: assetBase.type,
           quantity: quantity,
           averagePrice: averagePrice,
-          quantitySold: quantitySold,
-          averageSalePrice: averageSalePrice,
+          totalSold: totalSold,
         );
 
   int get quantity => _quantity.value;
   double get averagePrice => _averagePrice.value;
-  int get quantitySold => _quantitySold.value;
-  double get averageSalePrice => _averageSalePrice.value;
-  double get income => _income.value;
+  double get totalSold => _totalSold.value;
+  double get totalIncomes => _totalIncomes.value;
 
   @override
   Result<AssetData, String> validate() {
@@ -61,9 +55,8 @@ class AssetData extends AssetBase {
         .validate()
         .flatMap((success) => _quantity.validate())
         .flatMap((success) => _averagePrice.validate())
-        .flatMap((success) => _quantitySold.validate())
-        .flatMap((success) => _averageSalePrice.validate())
-        .flatMap((success) => _income.validate())
+        .flatMap((success) => _totalSold.validate())
+        .flatMap((success) => _totalIncomes.validate())
         .pure(this);
   }
 
@@ -73,16 +66,14 @@ class AssetData extends AssetBase {
     AssetType? type,
     PositiveIntegerVO? quantity,
     PositiveNumberVO? averagePrice,
-    PositiveIntegerVO? quantitySold,
-    PositiveNumberVO? averageSalePrice,
-    PositiveNumberVO? income,
+    PositiveNumberVO? totalSold,
+    PositiveNumberVO? totalIncomes,
   }) {
     final result = Result<AssetData, String>.success(this)
         .flatMap((_) => _validate(quantity))
         .flatMap((_) => _validate(averagePrice))
-        .flatMap((_) => _validate(quantitySold))
-        .flatMap((_) => _validate(averageSalePrice))
-        .flatMap((_) => _validate(income))
+        .flatMap((_) => _validate(totalSold))
+        .flatMap((_) => _validate(totalIncomes))
         .pure(this);
     if (result.isError()) return result;
     final fatherUpdate = super.update(name: name, type: type);
@@ -90,9 +81,8 @@ class AssetData extends AssetBase {
 
     _quantity = quantity ?? _quantity;
     _averagePrice = averagePrice ?? _averagePrice;
-    _quantitySold = quantitySold ?? _quantitySold;
-    _averageSalePrice = averageSalePrice ?? _averageSalePrice;
-    _income = income ?? _income;
+    _totalSold = totalSold ?? _totalSold;
+    _totalIncomes = totalIncomes ?? _totalIncomes;
     return Success(this);
   }
 
@@ -155,15 +145,8 @@ class AssetData extends AssetBase {
       final newQuantity = _quantity.value - transactionQuantity.value;
       _quantity = PositiveIntegerVO(newQuantity);
 
-      final newSoldQuantity = _quantitySold.value + transactionQuantity.value;
-      final newAverageSoldPrice = _calculateNewPrice(
-        _averageSalePrice.value,
-        _quantitySold.value,
-        price.value,
-        transactionQuantity.value,
-      );
-      _quantitySold = PositiveIntegerVO(newSoldQuantity);
-      _averageSalePrice = PositiveNumberVO(newAverageSoldPrice);
+      final soldValue = transactionQuantity.value * price.value;
+      _totalSold = PositiveNumberVO(totalSold + soldValue);
     }
     return validation;
   }
@@ -189,7 +172,7 @@ class AssetData extends AssetBase {
   Result<AssetData, String> registerIncome(PositiveNumberVO newIncome) {
     final result = newIncome.greaterThanZero().pure(this);
     if (result.isError()) return result;
-    _income = PositiveNumberVO(_income.value + newIncome.value);
+    _totalIncomes = PositiveNumberVO(_totalIncomes.value + newIncome.value);
     return Success(this);
   }
 }

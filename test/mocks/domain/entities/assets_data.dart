@@ -22,9 +22,8 @@ AssetData validAssetDataWeg3WithSale() => AssetData(
       name: TextVO('WEG S.A.'),
       type: AssetType.stock,
       averagePrice: PositiveNumberVO(10.0),
-      quantity: PositiveIntegerVO(2),
-      quantitySold: PositiveIntegerVO(1),
-      averageSalePrice: PositiveNumberVO(15),
+      quantity: PositiveIntegerVO(10),
+      totalSold: PositiveNumberVO(20.0),
     );
 
 AssetData invalidAssetDataWeg3NegativeQuantity() => AssetData(
@@ -45,7 +44,6 @@ AssetData validAssetDataWeg3WithIncome() => AssetData(
       type: AssetType.stock,
       averagePrice: PositiveNumberVO(10.0),
       quantity: PositiveIntegerVO(2),
-      quantitySold: PositiveIntegerVO(1),
-      averageSalePrice: PositiveNumberVO(15),
-      income: PositiveNumberVO(20.2),
+      totalSold: PositiveNumberVO(15),
+      totalIncomes: PositiveNumberVO(20.2),
     );

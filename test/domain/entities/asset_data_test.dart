@@ -35,8 +35,7 @@ void main() {
 
     test('should have default values to sales when none was passed', () {
       final item = validAssetDataWeg3();
-      expect(item.quantitySold, equals(0));
-      expect(item.averageSalePrice, equals(0.0));
+      expect(item.totalSold, equals(0.0));
     });
 
     test('should have default values to sales (named constructor)', () {
@@ -45,14 +44,12 @@ void main() {
         averagePrice: PositiveNumberVO(50.0),
         quantity: PositiveIntegerVO(15),
       );
-      expect(item.quantitySold, equals(0));
-      expect(item.averageSalePrice, equals(0.0));
+      expect(item.totalSold, equals(0.0));
     });
 
     test('should save values when passed', () {
       final item = validAssetDataWeg3WithSale();
-      expect(item.quantitySold, equals(1));
-      expect(item.averageSalePrice, equals(15));
+      expect(item.totalSold, equals(20));
     });
 
     test('should not change when pass invalid qtd to registerPurchase', () {
@@ -126,13 +123,25 @@ void main() {
     test('should change values when pass valid quantity', () {
       final item = validAssetDataWeg3();
       final response = item.registerSale(
-        transactionQuantity: PositiveIntegerVO(1),
+        transactionQuantity: PositiveIntegerVO(2),
         price: PositiveNumberVO(15.0),
       );
       expect(response, isA<Success>());
-      expect(item.quantity, equals(1));
-      expect(item.quantitySold, equals(1));
-      expect(item.averageSalePrice, equals(15.0));
+      expect(item.quantity, equals(0));
+      expect(item.totalSold, equals(30.0));
+    });
+
+    test('should increase values when pass valid sale and had values', () {
+      final item = validAssetDataWeg3WithSale();
+      final defaultQuantity = item.quantity;
+      final defaultSale = item.totalSold;
+      final response = item.registerSale(
+        transactionQuantity: PositiveIntegerVO(4),
+        price: PositiveNumberVO(10.0),
+      );
+      expect(response, isA<Success>());
+      expect(item.quantity, equals(defaultQuantity - 4));
+      expect(item.totalSold, equals(defaultSale + 40));
     });
 
     test('should not update when pass invalid value (father)', () {
@@ -168,34 +177,32 @@ void main() {
         type: AssetType.reit,
         quantity: PositiveIntegerVO(8),
         averagePrice: PositiveNumberVO(50.5),
-        quantitySold: PositiveIntegerVO(3),
-        averageSalePrice: PositiveNumberVO(70),
-        income: PositiveNumberVO(14.1),
+        totalSold: PositiveNumberVO(70),
+        totalIncomes: PositiveNumberVO(14.1),
       );
       expect(response, isA<Success>());
       expect(item.name, equals('Meu Novo Nome'));
       expect(item.type, equals(AssetType.reit));
       expect(item.quantity, equals(8));
       expect(item.averagePrice, equals(50.5));
-      expect(item.quantitySold, equals(3));
-      expect(item.averageSalePrice, equals(70));
-      expect(item.income, equals(14.1));
+      expect(item.totalSold, equals(70));
+      expect(item.totalIncomes, equals(14.1));
     });
 
     test('should not register new income when invalid value', () {
       final item = validAssetDataWeg3WithIncome();
-      final initIncome = item.income;
+      final initIncome = item.totalIncomes;
       final result = item.registerIncome(PositiveNumberVO(0));
       expect(result, isA<Failure>());
-      expect(item.income, equals(initIncome));
+      expect(item.totalIncomes, equals(initIncome));
     });
 
     test('should register new income when valid value', () {
       final item = validAssetDataWeg3WithIncome();
-      final initIncome = item.income;
+      final initIncome = item.totalIncomes;
       final result = item.registerIncome(PositiveNumberVO(30));
       expect(result, isA<Success>());
-      expect(item.income, equals(initIncome + 30));
+      expect(item.totalIncomes, equals(initIncome + 30));
     });
   });
 }
