@@ -5,7 +5,6 @@ import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo
 import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:result_dart/result_dart.dart';
-import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 
 class Asset extends AssetData {
   final Quote quote;
@@ -40,7 +39,7 @@ class Asset extends AssetData {
         );
 
   @override
-  Result<Entity, String> validate() {
+  Result<AssetData, String> validate() {
     return super.validate().flatMap((success) => quote.validate()).pure(this);
   }
 }

@@ -1,8 +1,9 @@
+import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/value_object.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:king_investor_wallet/src/domain/entities/asset_base.dart';
-import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
 
@@ -11,6 +12,7 @@ class AssetData extends AssetBase {
   PositiveNumberVO _averagePrice;
   PositiveIntegerVO _quantitySold;
   PositiveNumberVO _averageSalePrice;
+  PositiveNumberVO _income;
 
   AssetData({
     required super.symbol,
@@ -22,10 +24,12 @@ class AssetData extends AssetBase {
     required PositiveNumberVO averagePrice,
     PositiveIntegerVO? quantitySold,
     PositiveNumberVO? averageSalePrice,
+    PositiveNumberVO? income,
   })  : _quantity = quantity,
         _averagePrice = averagePrice,
         _quantitySold = quantitySold ?? PositiveIntegerVO(0),
-        _averageSalePrice = averageSalePrice ?? PositiveNumberVO(0.0);
+        _averageSalePrice = averageSalePrice ?? PositiveNumberVO(0.0),
+        _income = income ?? PositiveNumberVO(0.0);
 
   AssetData.fromBase(
       {required AssetBase assetBase,
@@ -49,17 +53,53 @@ class AssetData extends AssetBase {
   double get averagePrice => _averagePrice.value;
   int get quantitySold => _quantitySold.value;
   double get averageSalePrice => _averageSalePrice.value;
+  double get income => _income.value;
 
   @override
-  Result<Entity, String> validate() {
+  Result<AssetData, String> validate() {
     return super
         .validate()
         .flatMap((success) => _quantity.validate())
         .flatMap((success) => _averagePrice.validate())
+        .flatMap((success) => _quantitySold.validate())
+        .flatMap((success) => _averageSalePrice.validate())
+        .flatMap((success) => _income.validate())
         .pure(this);
   }
 
-  Result<Entity, String> registerPurchase({
+  @override
+  Result<AssetData, String> update({
+    TextVO? name,
+    AssetType? type,
+    PositiveIntegerVO? quantity,
+    PositiveNumberVO? averagePrice,
+    PositiveIntegerVO? quantitySold,
+    PositiveNumberVO? averageSalePrice,
+    PositiveNumberVO? income,
+  }) {
+    final result = Result<AssetData, String>.success(this)
+        .flatMap((_) => _validate(quantity))
+        .flatMap((_) => _validate(averagePrice))
+        .flatMap((_) => _validate(quantitySold))
+        .flatMap((_) => _validate(averageSalePrice))
+        .flatMap((_) => _validate(income))
+        .pure(this);
+    if (result.isError()) return result;
+    final fatherUpdate = super.update(name: name, type: type);
+    if (fatherUpdate.isError()) return fatherUpdate.pure(this);
+
+    _quantity = quantity ?? _quantity;
+    _averagePrice = averagePrice ?? _averagePrice;
+    _quantitySold = quantitySold ?? _quantitySold;
+    _averageSalePrice = averageSalePrice ?? _averageSalePrice;
+    _income = income ?? _income;
+    return Success(this);
+  }
+
+  Result<AssetData, String> _validate(ValueObject<dynamic>? value) =>
+      value?.validate().pure(this) ?? Success(this);
+
+  Result<AssetData, String> registerPurchase({
     required PositiveIntegerVO transactionQuantity,
     required PositiveNumberVO price,
   }) {
@@ -79,15 +119,15 @@ class AssetData extends AssetBase {
     return validQuantity.flatMap((_) => validPrice);
   }
 
-  Result<Entity, String> _validateQuantity(PositiveIntegerVO quantity) {
-    return Result<Entity, String>.success(this)
+  Result<AssetData, String> _validateQuantity(PositiveIntegerVO quantity) {
+    return Result<AssetData, String>.success(this)
         .flatMap((_) => quantity.validate())
         .flatMap((_) => quantity.greaterThanZero())
         .pure(this);
   }
 
-  Result<Entity, String> _validatePrice(PositiveNumberVO price) {
-    return Result<Entity, String>.success(this)
+  Result<AssetData, String> _validatePrice(PositiveNumberVO price) {
+    return Result<AssetData, String>.success(this)
         .flatMap((_) => price.validate())
         .flatMap((_) => price.greaterThanZero())
         .pure(this);
@@ -106,7 +146,7 @@ class AssetData extends AssetBase {
     return newAverage;
   }
 
-  Result<Entity, String> registerSale({
+  Result<AssetData, String> registerSale({
     required PositiveIntegerVO transactionQuantity,
     required PositiveNumberVO price,
   }) {
@@ -128,7 +168,7 @@ class AssetData extends AssetBase {
     return validation;
   }
 
-  Result<Entity, String> _validateSale(
+  Result<AssetData, String> _validateSale(
     PositiveIntegerVO soldAmount,
     PositiveNumberVO price,
   ) {
@@ -144,5 +184,12 @@ class AssetData extends AssetBase {
     } else {
       return Success(this);
     }
+  }
+
+  Result<AssetData, String> registerIncome(PositiveNumberVO newIncome) {
+    final result = newIncome.greaterThanZero().pure(this);
+    if (result.isError()) return result;
+    _income = PositiveNumberVO(_income.value + newIncome.value);
+    return Success(this);
   }
 }

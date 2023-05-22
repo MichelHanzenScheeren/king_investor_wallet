@@ -32,7 +32,7 @@ class AssetBase extends Entity {
         super(id: IdVO(symbol.value));
 
   @override
-  Result<Entity, String> validate() {
+  Result<AssetBase, String> validate() {
     return super
         .validate()
         .flatMap((success) => _symbol.validate())
@@ -42,21 +42,10 @@ class AssetBase extends Entity {
         .pure(this);
   }
 
-  Result<Entity, String> update({TextVO? name, AssetType? type}) {
-    bool changed = false;
-    if (name != null && !name.isValid) {
-      return name.validate().pure(this);
-    }
-    if (name != null && name != _name) {
-      _name = name;
-      changed = true;
-    }
-    if (type != null && type != _type) {
-      _type = type;
-      changed = true;
-    }
-    return changed
-        ? Success(this)
-        : const Failure('Nenhuma informação modificada');
+  Result<AssetBase, String> update({TextVO? name, AssetType? type}) {
+    if (name != null && !name.isValid) return name.validate().pure(this);
+    _name = name ?? _name;
+    _type = type ?? _type;
+    return Success(this);
   }
 }

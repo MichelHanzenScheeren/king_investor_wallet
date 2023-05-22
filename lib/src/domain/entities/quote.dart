@@ -28,7 +28,7 @@ class Quote extends Entity {
   bool get hasValidPrice => price.isValid;
 
   @override
-  Result<Entity, String> validate() {
+  Result<Quote, String> validate() {
     return super
         .validate()
         .flatMap((success) => price.validate().pure(this))

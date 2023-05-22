@@ -1,7 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:king_investor_wallet/src/domain/entities/asset_data.dart';
+import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:result_dart/result_dart.dart';
 import '../../mocks/domain/entities/assets_base.dart';
 import '../../mocks/domain/entities/assets_data.dart';
@@ -53,7 +55,7 @@ void main() {
       expect(item.averageSalePrice, equals(15));
     });
 
-    test('should not update when pass invalid qtd to registerPurchase', () {
+    test('should not change when pass invalid qtd to registerPurchase', () {
       final item = validAssetDataWeg3();
       final response = item.registerPurchase(
         transactionQuantity: PositiveIntegerVO(0),
@@ -65,7 +67,7 @@ void main() {
       expect(item.averagePrice, equals(10.0));
     });
 
-    test('should not update when pass invalid price to registerPurchase', () {
+    test('should not change when pass invalid price to registerPurchase', () {
       final item = validAssetDataWeg3();
       final response = item.registerPurchase(
         transactionQuantity: PositiveIntegerVO(2),
@@ -88,7 +90,7 @@ void main() {
       expect(item.averagePrice, equals(17.5));
     });
 
-    test('should not update when pass invalid qtd to registerSale', () {
+    test('should not change when pass invalid qtd to registerSale', () {
       final item = validAssetDataWeg3();
       final response = item.registerSale(
         transactionQuantity: PositiveIntegerVO(0),
@@ -99,7 +101,7 @@ void main() {
       expect(item.quantity, equals(2));
     });
 
-    test('should not update when pass invalid price to registerSale', () {
+    test('should not change when pass invalid price to registerSale', () {
       final item = validAssetDataWeg3();
       final response = item.registerSale(
         transactionQuantity: PositiveIntegerVO(1),
@@ -110,7 +112,7 @@ void main() {
       expect(item.quantity, equals(2));
     });
 
-    test('should not update when pass quantity bigger than current', () {
+    test('should not change when pass quantity bigger than current', () {
       final item = validAssetDataWeg3();
       final response = item.registerSale(
         transactionQuantity: PositiveIntegerVO(15),
@@ -121,7 +123,7 @@ void main() {
       expect(item.quantity, equals(2));
     });
 
-    test('should update values when pass valid quantity', () {
+    test('should change values when pass valid quantity', () {
       final item = validAssetDataWeg3();
       final response = item.registerSale(
         transactionQuantity: PositiveIntegerVO(1),
@@ -131,6 +133,69 @@ void main() {
       expect(item.quantity, equals(1));
       expect(item.quantitySold, equals(1));
       expect(item.averageSalePrice, equals(15.0));
+    });
+
+    test('should not update when pass invalid value (father)', () {
+      final item = validAssetDataWeg3();
+      final initName = item.name;
+      final initQuantity = item.quantity;
+      final response = item.update(
+        name: TextVO(null),
+        quantity: PositiveIntegerVO(5),
+      );
+      expect(response, isA<Failure>());
+      expect(item.name, initName);
+      expect(item.quantity, initQuantity);
+    });
+
+    test('should not update when pass invalid value (child)', () {
+      final item = validAssetDataWeg3();
+      final initName = item.name;
+      final initQuantity = item.quantity;
+      final response = item.update(
+        name: TextVO('Meu novo nome'),
+        quantity: PositiveIntegerVO(-4),
+      );
+      expect(response, isA<Failure>());
+      expect(item.name, initName);
+      expect(item.quantity, initQuantity);
+    });
+
+    test('should update when all is valid', () {
+      final item = validAssetDataWeg3WithIncome();
+      final response = item.update(
+        name: TextVO('Meu novo nome'),
+        type: AssetType.reit,
+        quantity: PositiveIntegerVO(8),
+        averagePrice: PositiveNumberVO(50.5),
+        quantitySold: PositiveIntegerVO(3),
+        averageSalePrice: PositiveNumberVO(70),
+        income: PositiveNumberVO(14.1),
+      );
+      expect(response, isA<Success>());
+      expect(item.name, equals('Meu Novo Nome'));
+      expect(item.type, equals(AssetType.reit));
+      expect(item.quantity, equals(8));
+      expect(item.averagePrice, equals(50.5));
+      expect(item.quantitySold, equals(3));
+      expect(item.averageSalePrice, equals(70));
+      expect(item.income, equals(14.1));
+    });
+
+    test('should not register new income when invalid value', () {
+      final item = validAssetDataWeg3WithIncome();
+      final initIncome = item.income;
+      final result = item.registerIncome(PositiveNumberVO(0));
+      expect(result, isA<Failure>());
+      expect(item.income, equals(initIncome));
+    });
+
+    test('should register new income when valid value', () {
+      final item = validAssetDataWeg3WithIncome();
+      final initIncome = item.income;
+      final result = item.registerIncome(PositiveNumberVO(30));
+      expect(result, isA<Success>());
+      expect(item.income, equals(initIncome + 30));
     });
   });
 }

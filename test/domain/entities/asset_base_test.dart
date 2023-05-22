@@ -34,22 +34,6 @@ void main() {
       expect(item.type, equals(AssetType.stock));
     });
 
-    test('should not update when none was passed', () {
-      final item = validAssetBaseWeg3();
-      final result = item.update();
-      expect(result, isA<Failure>());
-      expect(result.exceptionOrNull(), equals('Nenhuma informação modificada'));
-    });
-
-    test('should not update when equal values were passed', () {
-      final item = validAssetBaseWeg3();
-      final result = item.update(
-        name: TextVO('WEG S.A.'),
-        type: AssetType.stock,
-      );
-      expect(result, isA<Failure>());
-    });
-
     test('should not update when invalid name was passed', () {
       final item = validAssetBaseWeg3();
       final result = item.update(name: TextVO(null));
