@@ -4,7 +4,6 @@ import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
 
 Quote validQuoteWithRandomId1() => Quote(
-      id: IdVO(null),
       price: PositiveNumberVO(1.5),
       high: PositiveNumberVO(45.7),
       low: PositiveNumberVO(001.45),
@@ -16,7 +15,6 @@ Quote validQuoteWithRandomId1() => Quote(
     );
 
 Quote invalidQuoteWithRandomId1() => Quote(
-      id: IdVO(null),
       price: PositiveNumberVO(1.5),
       changePercentage: NumberVO(2.7),
       changePercentageMonth: NumberVO(3),
@@ -52,7 +50,6 @@ Quote validQuoteWithStaticId2() => Quote(
     );
 
 Quote invalidQuoteWithInvalidPrice() => Quote(
-      id: IdVO(null),
       price: PositiveNumberVO(''),
       changePercentage: NumberVO(2.7),
       changePercentageMonth: NumberVO(3),

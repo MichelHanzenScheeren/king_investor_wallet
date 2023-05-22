@@ -14,7 +14,7 @@ class Quote extends Entity {
   final NumberVO changePercentageYear;
 
   Quote({
-    required super.id,
+    super.id,
     required this.price,
     required this.high,
     required this.low,

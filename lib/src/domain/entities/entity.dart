@@ -4,7 +4,7 @@ import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 class Entity {
   final IdVO _id;
 
-  Entity({required IdVO id}) : _id = id;
+  Entity({IdVO? id}) : _id = id ?? IdVO(null);
 
   String get id => _id.value;
 

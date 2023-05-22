@@ -9,7 +9,12 @@ void main() {
       expect(item.isValid, isTrue);
     });
 
-    test('should be always valid when created with default id', () {
+    test('should be always valid when created (IdVO null)', () {
+      final item = Entity();
+      expect(item.isValid, isTrue);
+    });
+
+    test('should be always valid when created with static id', () {
       final item = Entity(id: IdVO('1234'));
       expect(item.isValid, isTrue);
     });
