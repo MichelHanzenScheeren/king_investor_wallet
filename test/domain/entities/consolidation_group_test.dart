@@ -31,6 +31,34 @@ void main() {
       );
     });
 
+    test('should calculate right partials', () {
+      final item = validConsolidationGroup();
+      final consolidation = item.assetsConsolidation.first;
+      expect(consolidation.discriminator, equals('Wege3'));
+      expect(consolidation.totalInvested, equals(41));
+      expect(
+        consolidation.totalInvestedPercentage.toStringAsFixed(2),
+        equals('29.93'),
+      );
+      expect(consolidation.totalToday, equals(3));
+      expect(
+        consolidation.totalTodayPercentage.toStringAsFixed(2),
+        equals('7.69'),
+      );
+      expect(consolidation.totalIncomes, equals(15));
+      expect(consolidation.balanceSales, equals(5));
+      expect(consolidation.valorization, equals(-38));
+      expect(
+        consolidation.valorizationPercentage.toStringAsFixed(2),
+        equals('-92.68'),
+      );
+      expect(consolidation.result, equals(-18));
+      expect(
+        consolidation.resultPercentage.toStringAsFixed(2),
+        equals('-43.90'),
+      );
+    });
+
     test('should be invalid when invalid data (total)', () {
       final item = invalidConsolidationGroup();
       expect(item.isValid, isFalse);
