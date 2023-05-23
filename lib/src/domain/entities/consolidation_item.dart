@@ -3,11 +3,11 @@ import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
-import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ConsolidationItem extends Entity {
-  final SymbolVO _discriminator;
+  final TextVO _discriminator;
   final PositiveNumberVO _totalInvested;
   final PositiveNumberVO _totalInvestedPercentage;
   final PositiveNumberVO _totalToday;
@@ -20,7 +20,7 @@ class ConsolidationItem extends Entity {
   late final NumberVO _resultPercentage;
 
   ConsolidationItem({
-    required SymbolVO discriminator,
+    required TextVO discriminator,
     required PositiveNumberVO totalInvested,
     required PositiveNumberVO totalInvestedPercentage,
     required PositiveNumberVO totalToday,
