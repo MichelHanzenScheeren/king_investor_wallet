@@ -1,4 +1,5 @@
 import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/value_object.dart';
@@ -10,7 +11,7 @@ import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo
 class AssetData extends AssetBase {
   PositiveIntegerVO _quantity;
   PositiveNumberVO _averagePrice;
-  PositiveNumberVO _totalSold;
+  NumberVO _balanceSales;
   PositiveNumberVO _totalIncomes;
 
   AssetData({
@@ -21,18 +22,18 @@ class AssetData extends AssetBase {
     required super.type,
     required PositiveIntegerVO quantity,
     required PositiveNumberVO averagePrice,
-    PositiveNumberVO? totalSold,
+    NumberVO? balanceSales,
     PositiveNumberVO? totalIncomes,
   })  : _quantity = quantity,
         _averagePrice = averagePrice,
-        _totalSold = totalSold ?? PositiveNumberVO(0.0),
+        _balanceSales = balanceSales ?? NumberVO(0.0),
         _totalIncomes = totalIncomes ?? PositiveNumberVO(0.0);
 
   AssetData.fromBase({
     required AssetBase assetBase,
     required PositiveIntegerVO quantity,
     required PositiveNumberVO averagePrice,
-    PositiveNumberVO? totalSold,
+    NumberVO? balanceSales,
   }) : this(
           symbol: SymbolVO(assetBase.symbol),
           currency: SymbolVO(assetBase.currency),
@@ -41,12 +42,12 @@ class AssetData extends AssetBase {
           type: assetBase.type,
           quantity: quantity,
           averagePrice: averagePrice,
-          totalSold: totalSold,
+          balanceSales: balanceSales,
         );
 
   int get quantity => _quantity.value;
   double get averagePrice => _averagePrice.value;
-  double get totalSold => _totalSold.value;
+  double get balanceSales => _balanceSales.value;
   double get totalIncomes => _totalIncomes.value;
 
   @override
@@ -55,7 +56,7 @@ class AssetData extends AssetBase {
         .validate()
         .flatMap((success) => _quantity.validate())
         .flatMap((success) => _averagePrice.validate())
-        .flatMap((success) => _totalSold.validate())
+        .flatMap((success) => _balanceSales.validate())
         .flatMap((success) => _totalIncomes.validate())
         .pure(this);
   }
@@ -66,13 +67,13 @@ class AssetData extends AssetBase {
     AssetType? type,
     PositiveIntegerVO? quantity,
     PositiveNumberVO? averagePrice,
-    PositiveNumberVO? totalSold,
+    NumberVO? balanceSales,
     PositiveNumberVO? totalIncomes,
   }) {
     final result = Result<AssetData, String>.success(this)
         .flatMap((_) => _validate(quantity))
         .flatMap((_) => _validate(averagePrice))
-        .flatMap((_) => _validate(totalSold))
+        .flatMap((_) => _validate(balanceSales))
         .flatMap((_) => _validate(totalIncomes))
         .pure(this);
     if (result.isError()) return result;
@@ -81,7 +82,7 @@ class AssetData extends AssetBase {
 
     _quantity = quantity ?? _quantity;
     _averagePrice = averagePrice ?? _averagePrice;
-    _totalSold = totalSold ?? _totalSold;
+    _balanceSales = balanceSales ?? _balanceSales;
     _totalIncomes = totalIncomes ?? _totalIncomes;
     return Success(this);
   }
@@ -146,7 +147,8 @@ class AssetData extends AssetBase {
       _quantity = PositiveIntegerVO(newQuantity);
 
       final soldValue = transactionQuantity.value * price.value;
-      _totalSold = PositiveNumberVO(totalSold + soldValue);
+      final boughtValue = transactionQuantity.value * _averagePrice.value;
+      _balanceSales = NumberVO(balanceSales + soldValue - boughtValue);
     }
     return validation;
   }

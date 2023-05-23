@@ -35,7 +35,7 @@ void main() {
 
     test('should have default values to sales when none was passed', () {
       final item = validAssetDataWeg3();
-      expect(item.totalSold, equals(0.0));
+      expect(item.balanceSales, equals(0.0));
     });
 
     test('should have default values to sales (named constructor)', () {
@@ -44,12 +44,12 @@ void main() {
         averagePrice: PositiveNumberVO(50.0),
         quantity: PositiveIntegerVO(15),
       );
-      expect(item.totalSold, equals(0.0));
+      expect(item.balanceSales, equals(0.0));
     });
 
     test('should save values when passed', () {
       final item = validAssetDataWeg3WithSale();
-      expect(item.totalSold, equals(20));
+      expect(item.balanceSales, equals(20));
     });
 
     test('should not change when pass invalid qtd to registerPurchase', () {
@@ -128,20 +128,20 @@ void main() {
       );
       expect(response, isA<Success>());
       expect(item.quantity, equals(0));
-      expect(item.totalSold, equals(30.0));
+      expect(item.balanceSales, equals(10.0));
     });
 
     test('should increase values when pass valid sale and had values', () {
       final item = validAssetDataWeg3WithSale();
       final defaultQuantity = item.quantity;
-      final defaultSale = item.totalSold;
+      final defaultSale = item.balanceSales;
       final response = item.registerSale(
         transactionQuantity: PositiveIntegerVO(4),
-        price: PositiveNumberVO(10.0),
+        price: PositiveNumberVO(5.0),
       );
       expect(response, isA<Success>());
       expect(item.quantity, equals(defaultQuantity - 4));
-      expect(item.totalSold, equals(defaultSale + 40));
+      expect(item.balanceSales, equals(defaultSale - 20));
     });
 
     test('should not update when pass invalid value (father)', () {
@@ -177,7 +177,7 @@ void main() {
         type: AssetType.reit,
         quantity: PositiveIntegerVO(8),
         averagePrice: PositiveNumberVO(50.5),
-        totalSold: PositiveNumberVO(70),
+        balanceSales: PositiveNumberVO(70),
         totalIncomes: PositiveNumberVO(14.1),
       );
       expect(response, isA<Success>());
@@ -185,7 +185,7 @@ void main() {
       expect(item.type, equals(AssetType.reit));
       expect(item.quantity, equals(8));
       expect(item.averagePrice, equals(50.5));
-      expect(item.totalSold, equals(70));
+      expect(item.balanceSales, equals(70));
       expect(item.totalIncomes, equals(14.1));
     });
 

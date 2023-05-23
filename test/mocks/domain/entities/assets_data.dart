@@ -23,7 +23,7 @@ AssetData validAssetDataWeg3WithSale() => AssetData(
       type: AssetType.stock,
       averagePrice: PositiveNumberVO(10.0),
       quantity: PositiveIntegerVO(10),
-      totalSold: PositiveNumberVO(20.0),
+      balanceSales: PositiveNumberVO(20.0),
     );
 
 AssetData invalidAssetDataWeg3NegativeQuantity() => AssetData(
@@ -44,6 +44,6 @@ AssetData validAssetDataWeg3WithIncome() => AssetData(
       type: AssetType.stock,
       averagePrice: PositiveNumberVO(10.0),
       quantity: PositiveIntegerVO(2),
-      totalSold: PositiveNumberVO(15),
+      balanceSales: PositiveNumberVO(15),
       totalIncomes: PositiveNumberVO(20.2),
     );
