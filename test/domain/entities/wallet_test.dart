@@ -69,7 +69,7 @@ void main() {
     test('should add asset when valid', () {
       final item = validWalletWithAssets();
       final initLength = item.assets.length;
-      final result = item.addAsset(validAssetBaseHGRU11());
+      final result = item.addAsset(validAssetHGRU11());
       expect(result, isA<Success>());
       expect(item.assets.length, equals(initLength + 1));
     });
@@ -77,7 +77,7 @@ void main() {
     test('should not remove if unknown asset', () {
       final item = validWalletWithAssets();
       final initLength = item.assets.length;
-      final result = item.removeAsset(validAssetBaseHGRU11().symbol);
+      final result = item.removeAsset(validAssetHGRU11().symbol);
       expect(result, isA<Failure>());
       expect(item.assets.length, equals(initLength));
     });

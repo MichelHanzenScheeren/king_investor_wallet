@@ -32,7 +32,7 @@ Asset invalidAssetWeg3() => Asset(
       quote: invalidQuoteWithInvalidPrice(),
     );
 
-Asset validAssetBaseHGRU11() => Asset(
+Asset validAssetHGRU11() => Asset(
       symbol: SymbolVO('HGRU11.SAO'),
       currency: SymbolVO('BRL'),
       country: TextVO('Brazil'),

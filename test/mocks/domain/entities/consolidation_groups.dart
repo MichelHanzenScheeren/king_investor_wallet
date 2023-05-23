@@ -5,7 +5,7 @@ import 'assets.dart';
 
 ConsolidationGroup validConsolidationGroup() => ConsolidationGroup(
       discriminator: TextVO('Símbolo1'),
-      filteredAssets: [validAssetWeg3(), validAssetBaseHGRU11()],
+      filteredAssets: [validAssetWeg3(), validAssetHGRU11()],
     );
 
 ConsolidationGroup invalidConsolidationGroup() => ConsolidationGroup(
