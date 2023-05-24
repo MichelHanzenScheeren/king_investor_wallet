@@ -4,6 +4,8 @@ import 'package:result_dart/result_dart.dart';
 class PositiveNumberVO extends NumberVO {
   PositiveNumberVO(dynamic value) : super(value);
 
+  PositiveNumberVO.asDefault() : super(0.0);
+
   @override
   double get value => super.value < 0 ? 0.0 : super.value;
 

@@ -27,5 +27,11 @@ void main() {
       expect(item.isValid, isFalse);
       expect(item.validate().exceptionOrNull(), equals(outOfRangeMessage));
     });
+
+    test('should have correct value when use named constructor', () {
+      final item = RatingVO.asDefault();
+      expect(item.isValid, isTrue);
+      expect(item.value, equals(10));
+    });
   });
 }

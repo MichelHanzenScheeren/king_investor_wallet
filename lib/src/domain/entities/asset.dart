@@ -4,6 +4,7 @@ import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/rating_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:result_dart/result_dart.dart';
@@ -21,6 +22,7 @@ class Asset extends AssetData {
     required PositiveNumberVO averagePrice,
     NumberVO? balanceSales,
     PositiveNumberVO? totalIncomes,
+    RatingVO? rating,
     required this.quote,
   }) : super(
           symbol: symbol,
@@ -32,6 +34,7 @@ class Asset extends AssetData {
           averagePrice: averagePrice,
           balanceSales: balanceSales,
           totalIncomes: totalIncomes,
+          rating: rating,
         );
 
   Asset.fromData({
@@ -47,6 +50,7 @@ class Asset extends AssetData {
           averagePrice: PositiveNumberVO(assetData.averagePrice),
           balanceSales: NumberVO(assetData.balanceSales),
           totalIncomes: PositiveNumberVO(assetData.totalIncomes),
+          rating: RatingVO(assetData.rating),
         );
 
   @override

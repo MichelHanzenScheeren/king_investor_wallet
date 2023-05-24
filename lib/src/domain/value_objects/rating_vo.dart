@@ -4,6 +4,8 @@ import 'package:result_dart/result_dart.dart';
 class RatingVO extends IntegerVO {
   RatingVO(super.value);
 
+  RatingVO.asDefault() : this(10);
+
   @override
   Result<RatingVO, String> validate() =>
       super.validate().flatMap((success) => _localValidate()).pure(this);

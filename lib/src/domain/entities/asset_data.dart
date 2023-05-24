@@ -1,5 +1,6 @@
 import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/rating_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/value_object.dart';
@@ -13,6 +14,7 @@ class AssetData extends AssetBase {
   PositiveNumberVO _averagePrice;
   PositiveNumberVO _totalIncomes;
   NumberVO _balanceSales;
+  RatingVO _rating;
 
   AssetData({
     required super.symbol,
@@ -24,10 +26,12 @@ class AssetData extends AssetBase {
     required PositiveNumberVO averagePrice,
     PositiveNumberVO? totalIncomes,
     NumberVO? balanceSales,
+    RatingVO? rating,
   })  : _quantity = quantity,
         _averagePrice = averagePrice,
         _totalIncomes = totalIncomes ?? PositiveNumberVO(0.0),
-        _balanceSales = balanceSales ?? NumberVO(0.0);
+        _balanceSales = balanceSales ?? NumberVO.asDefault(),
+        _rating = rating ?? RatingVO.asDefault();
 
   AssetData.fromBase({
     required AssetBase assetBase,
@@ -35,6 +39,7 @@ class AssetData extends AssetBase {
     required PositiveNumberVO averagePrice,
     PositiveNumberVO? totalIncomes,
     NumberVO? balanceSales,
+    RatingVO? rating,
   }) : this(
           symbol: SymbolVO(assetBase.symbol),
           currency: SymbolVO(assetBase.currency),
@@ -45,12 +50,14 @@ class AssetData extends AssetBase {
           averagePrice: averagePrice,
           totalIncomes: totalIncomes,
           balanceSales: balanceSales,
+          rating: rating,
         );
 
   int get quantity => _quantity.value;
   double get averagePrice => _averagePrice.value;
   double get totalIncomes => _totalIncomes.value;
   double get balanceSales => _balanceSales.value;
+  int get rating => _rating.value;
 
   @override
   Result<AssetData, String> validate() {

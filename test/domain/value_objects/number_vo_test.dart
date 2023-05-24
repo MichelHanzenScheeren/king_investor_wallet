@@ -54,5 +54,11 @@ void main() {
       final item = NumberVO('1,4');
       expect(item.isValid, isFalse);
     });
+
+    test('should have correct value when use named constructor', () {
+      final item = NumberVO.asDefault();
+      expect(item.isValid, isTrue);
+      expect(item.value, equals(0.0));
+    });
   });
 }
