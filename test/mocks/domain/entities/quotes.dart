@@ -59,3 +59,14 @@ Quote invalidQuoteWithInvalidPrice() => Quote(
       yearHigh: PositiveNumberVO(1),
       yearLow: PositiveNumberVO(12.0),
     );
+
+Quote validQuoteWithRandomId2() => Quote(
+      price: PositiveNumberVO(60.1),
+      high: PositiveNumberVO(65),
+      low: PositiveNumberVO(45),
+      yearHigh: PositiveNumberVO(70),
+      yearLow: PositiveNumberVO(40),
+      changePercentage: NumberVO(15),
+      changePercentageMonth: NumberVO(3),
+      changePercentageYear: NumberVO(7.9),
+    );

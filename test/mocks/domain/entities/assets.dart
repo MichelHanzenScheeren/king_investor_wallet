@@ -55,3 +55,16 @@ Asset invalidAssetWithInvalidSymbol() => Asset(
       averagePrice: PositiveNumberVO(20.5),
       quote: invalidQuoteWithInvalidPrice(),
     );
+
+Asset validAssetItub3() => Asset(
+      symbol: SymbolVO('ITUB3.SAO'),
+      currency: SymbolVO('BRL'),
+      country: TextVO('Brazil'),
+      name: TextVO('Itaú Unibanco'),
+      type: AssetType.stock,
+      quantity: PositiveIntegerVO(6),
+      averagePrice: PositiveNumberVO(30.8),
+      quote: validQuoteWithRandomId2(),
+      totalIncomes: PositiveNumberVO(12.0),
+      balanceSales: NumberVO(0),
+    );
