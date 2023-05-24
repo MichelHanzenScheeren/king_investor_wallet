@@ -2,7 +2,7 @@ import 'package:king_investor_wallet/src/domain/value_objects/integer_vo.dart';
 import 'package:result_dart/result_dart.dart';
 
 class PositiveIntegerVO extends IntegerVO {
-  PositiveIntegerVO(dynamic value) : super(value);
+  PositiveIntegerVO(super.value);
 
   @override
   int get value => super.value < 0 ? 0 : super.value;
