@@ -1,4 +1,5 @@
 import 'package:king_investor_wallet/src/domain/entities/asset.dart';
+import 'package:king_investor_wallet/src/domain/entities/asset_type_rating.dart';
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:result_dart/result_dart.dart';
@@ -7,6 +8,7 @@ class Wallet extends Entity {
   TextVO _name;
   bool _isDefault;
   final List<Asset> _assets;
+  // final List<AssetTypeRating> typesRating;
 
   Wallet(
       {super.id,

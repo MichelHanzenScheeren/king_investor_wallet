@@ -20,5 +20,17 @@ void main() {
       final item = AssetTypeRating(type: AssetType.reit, rating: RatingVO(11));
       expect(item.isValid, isFalse);
     });
+
+    test('should be equal to other class with same asset type', () {
+      final item = AssetTypeRating(type: AssetType.stock, rating: RatingVO(8));
+      final item2 = AssetTypeRating(type: AssetType.stock, rating: RatingVO(2));
+      expect(item, equals(item2));
+    });
+
+    test('should be different to other class with different asset type', () {
+      final item = AssetTypeRating(type: AssetType.stock, rating: RatingVO(8));
+      final item2 = AssetTypeRating(type: AssetType.reit, rating: RatingVO(2));
+      expect(item, isNot(item2));
+    });
   });
 }

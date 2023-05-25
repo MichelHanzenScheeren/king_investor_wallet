@@ -1,5 +1,6 @@
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/rating_vo.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -8,11 +9,11 @@ class AssetTypeRating extends Entity {
   final RatingVO _rating;
 
   AssetTypeRating({
-    super.id,
     required AssetType type,
     required RatingVO rating,
   })  : _type = type,
-        _rating = rating;
+        _rating = rating,
+        super(id: IdVO(type.toString()));
 
   AssetTypeRating.asDefault({
     super.id,
