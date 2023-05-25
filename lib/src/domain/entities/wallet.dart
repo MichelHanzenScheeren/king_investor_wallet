@@ -1,6 +1,4 @@
 import 'package:king_investor_wallet/src/domain/entities/asset.dart';
-import 'package:king_investor_wallet/src/domain/entities/consolidation.dart';
-import 'package:king_investor_wallet/src/domain/entities/consolidation_result.dart';
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:result_dart/result_dart.dart';
@@ -54,9 +52,5 @@ class Wallet extends Entity {
       return Success(this);
     }
     return const Failure('Ativo não encontrado');
-  }
-
-  ConsolidationResult consolidateWallet() {
-    return Consolidation(assets: assets).consolidate();
   }
 }
