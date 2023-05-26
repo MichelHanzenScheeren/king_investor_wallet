@@ -25,14 +25,14 @@ void main() {
 
     test('should correct generate results for passed asset categories', () {
       final item = consolidationWithValidAndInvalidAssets2();
-      final consolidation = item.consolidate();
+      final consolidation = item.consolidate().getOrThrow();
       final categoriesCons = consolidation.assetTypesConsolidation;
       expect(categoriesCons, hasLength(2));
     });
 
     test('should correct generate results for stocks category', () {
       final item = consolidationWithValidAndInvalidAssets2();
-      final consolidation = item.consolidate();
+      final consolidation = item.consolidate().getOrThrow();
       final categoriesCons = consolidation.assetTypesConsolidation;
 
       final first = categoriesCons.first;

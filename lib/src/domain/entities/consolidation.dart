@@ -41,18 +41,21 @@ class Consolidation extends Entity {
     }
   }
 
-  ConsolidationResult consolidate() {
+  Result<ConsolidationResult, String> consolidate() {
+    if (!isValid) {
+      return Failure(validate().exceptionOrNull() ?? '');
+    }
     final totalRelatedToAllAssets = _consolidateTotals();
     final totalConsolidation = totalRelatedToAllAssets.totalConsolidation;
     final allAssetsConsolidation = totalRelatedToAllAssets.assetsConsolidation;
     final assetTypesConsolidation = _consolidateAssetTypes(totalConsolidation);
     final assetsGroupedByTypeConsolidation = _consolidateAssetsGroupedByType();
-    return ConsolidationResult(
+    return Success(ConsolidationResult(
       totalConsolidation: totalConsolidation,
       allAssetsConsolidation: allAssetsConsolidation,
       assetTypesConsolidation: assetTypesConsolidation,
       assetsGroupedByTypeConsolidation: assetsGroupedByTypeConsolidation,
-    );
+    ));
   }
 
   ConsolidationGroup _consolidateTotals() {
