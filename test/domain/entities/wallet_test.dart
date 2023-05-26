@@ -89,5 +89,15 @@ void main() {
       expect(result, isA<Success>());
       expect(item.assets.length, equals(initLength - 1));
     });
+
+    test('should be valid if pass AssetTypeRatings', () {
+      final item = validWalletWithAssetsAndAssetTypeRatings();
+      expect(item.isValid, isTrue);
+    });
+
+    test('should be invalid if receive invalid AssetTypeRating', () {
+      final item = invalidWalletWithAssetTypeRatings();
+      expect(item.isValid, isFalse);
+    });
   });
 }
