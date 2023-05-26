@@ -4,16 +4,16 @@ import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
-import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ConsolidationGroup extends Entity {
-  final TextVO _discriminator;
+  final SymbolVO _discriminator;
   late final ConsolidationItem totalConsolidation;
   final List<ConsolidationItem> _assetsConsolidation = [];
 
   ConsolidationGroup(
-      {required TextVO discriminator, required List<Asset> filteredAssets})
+      {required SymbolVO discriminator, required List<Asset> filteredAssets})
       : _discriminator = discriminator,
         super(id: IdVO(discriminator.value)) {
     _consolidate(filteredAssets);
@@ -63,7 +63,7 @@ class ConsolidationGroup extends Entity {
       final totalInvested = asset.averagePrice * asset.quantity;
       final totalToday = asset.quote.price * asset.quantity;
       final assetConsolidation = ConsolidationItem(
-        discriminator: TextVO(asset.symbol),
+        discriminator: SymbolVO(asset.symbol),
         totalInvested: PositiveNumberVO(totalInvested),
         totalInvestedPercentage: PositiveNumberVO(
           totalInvested * 100 / totalConsolidation.totalInvested,

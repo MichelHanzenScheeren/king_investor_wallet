@@ -12,7 +12,7 @@ void main() {
     test('should calculate right totals', () {
       final item = validConsolidationGroup();
       final consolidation = item.totalConsolidation;
-      expect(consolidation.discriminator, equals('Símbolo1'));
+      expect(consolidation.discriminator, equals('SÍMBOLO1'));
       expect(consolidation.totalInvested, equals(137));
       expect(consolidation.totalInvestedPercentage, equals(100));
       expect(consolidation.totalToday, equals(39));
@@ -34,7 +34,7 @@ void main() {
     test('should calculate right partials', () {
       final item = validConsolidationGroup();
       final consolidation = item.assetsConsolidation.first;
-      expect(consolidation.discriminator, equals('Wege3'));
+      expect(consolidation.discriminator, equals('WEGE3'));
       expect(consolidation.totalInvested, equals(41));
       expect(
         consolidation.totalInvestedPercentage.toStringAsFixed(2),

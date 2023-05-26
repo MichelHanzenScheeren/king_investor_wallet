@@ -7,7 +7,7 @@ import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
-import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 import 'package:result_dart/result_dart.dart';
 
 class Consolidation extends Entity {
@@ -57,7 +57,7 @@ class Consolidation extends Entity {
 
   ConsolidationGroup _consolidateTotals() {
     return ConsolidationGroup(
-      discriminator: TextVO('Total'),
+      discriminator: SymbolVO('Total'),
       filteredAssets: validAssets,
     );
   }
@@ -91,7 +91,7 @@ class Consolidation extends Entity {
       balanceSales += asset.balanceSales;
     }
     return ConsolidationItem(
-      discriminator: TextVO(type.abbreviation),
+      discriminator: SymbolVO(type.abbreviation),
       totalInvested: PositiveNumberVO(totalInvested),
       totalInvestedPercentage: PositiveNumberVO(
         totalInvested * 100 / totals.totalInvested,
@@ -109,7 +109,7 @@ class Consolidation extends Entity {
     final List<ConsolidationGroup> results = [];
     for (AssetType type in AssetType.values) {
       final consolidation = ConsolidationGroup(
-        discriminator: TextVO(type.abbreviation),
+        discriminator: SymbolVO(type.abbreviation),
         filteredAssets: _filterByAssetType(type, _validAssets),
       );
       results.add(consolidation);

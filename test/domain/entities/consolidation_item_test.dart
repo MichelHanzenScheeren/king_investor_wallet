@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import '../../mocks/domain/entities/assets_base.dart';
 import '../../mocks/domain/entities/consolidation_items.dart';
 
 void main() {
@@ -42,6 +43,11 @@ void main() {
     test('should be valid when created (with incomes)', () {
       final item = invalidConsolidation();
       expect(item.isValid, isFalse);
+    });
+
+    test('should return true on comparison with correspondent asset', () {
+      final item = validConsolidationItemWithValorization();
+      expect(item, equals(validAssetBaseWeg3()));
     });
   });
 }
