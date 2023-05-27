@@ -1,10 +1,11 @@
 import 'package:king_investor_wallet/src/domain/entities/consolidation_item.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 
 ConsolidationItem validConsolidationItemWithValorization() => ConsolidationItem(
-      discriminator: SymbolVO('wege3'),
+      id: IdVO(SymbolVO('wege3').value),
       totalInvested: PositiveNumberVO(250.0),
       totalInvestedPercentage: PositiveNumberVO(100),
       totalToday: PositiveNumberVO(300),
@@ -14,7 +15,7 @@ ConsolidationItem validConsolidationItemWithValorization() => ConsolidationItem(
     );
 
 ConsolidationItem validConsolidationItemWithDevaluation() => ConsolidationItem(
-      discriminator: SymbolVO('Total'),
+      id: IdVO('Total'),
       totalInvested: PositiveNumberVO(150.0),
       totalInvestedPercentage: PositiveNumberVO(100),
       totalToday: PositiveNumberVO(120),
@@ -24,7 +25,7 @@ ConsolidationItem validConsolidationItemWithDevaluation() => ConsolidationItem(
     );
 
 ConsolidationItem validConsolidationItemWithSalesLosses() => ConsolidationItem(
-      discriminator: SymbolVO('Total'),
+      id: IdVO('Total'),
       totalInvested: PositiveNumberVO(420.0),
       totalInvestedPercentage: PositiveNumberVO(100),
       totalToday: PositiveNumberVO(510),
@@ -34,7 +35,7 @@ ConsolidationItem validConsolidationItemWithSalesLosses() => ConsolidationItem(
     );
 
 ConsolidationItem validConsolidationItemWithIncomes() => ConsolidationItem(
-      discriminator: SymbolVO('Total'),
+      id: IdVO('Total'),
       totalInvested: PositiveNumberVO(500.0),
       totalInvestedPercentage: PositiveNumberVO(100),
       totalToday: PositiveNumberVO(800),
@@ -44,7 +45,7 @@ ConsolidationItem validConsolidationItemWithIncomes() => ConsolidationItem(
     );
 
 ConsolidationItem invalidConsolidation() => ConsolidationItem(
-      discriminator: SymbolVO('Total'),
+      id: IdVO('Total'),
       totalInvested: PositiveNumberVO(-500.0),
       totalInvestedPercentage: PositiveNumberVO(100),
       totalToday: PositiveNumberVO(800),

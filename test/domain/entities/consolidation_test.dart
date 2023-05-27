@@ -1,7 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
-import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
-
 import '../../mocks/domain/entities/consolidations.dart';
 
 void main() {
@@ -36,9 +34,8 @@ void main() {
       final categoriesCons = consolidation.assetTypesConsolidation;
 
       final first = categoriesCons.first;
-      final discriminator1 = SymbolVO(AssetType.stock.abbreviation).value;
       expect(first.isValid, isTrue);
-      expect(first.discriminator, equals(discriminator1));
+      expect(first.id, equals(AssetType.stock.abbreviation));
       expect(first.totalInvested, equals(225.8));
       expect(first.totalInvestedPercentage.toStringAsFixed(2), equals('70.17'));
       expect(first.totalToday, equals(363.6));

@@ -40,7 +40,7 @@ void main() {
       expect(item.resultPercentage, equals(100));
     });
 
-    test('should be valid when created (with incomes)', () {
+    test('should be invalid when created with invalid data', () {
       final item = invalidConsolidation();
       expect(item.isValid, isFalse);
     });

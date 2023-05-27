@@ -1,13 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
-import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
-import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ConsolidationItem extends Entity {
-  final SymbolVO _discriminator;
   final PositiveNumberVO _totalInvested;
   final PositiveNumberVO _totalInvestedPercentage;
   final PositiveNumberVO _totalToday;
@@ -20,21 +17,19 @@ class ConsolidationItem extends Entity {
   late final NumberVO _resultPercentage;
 
   ConsolidationItem({
-    required SymbolVO discriminator,
+    required super.id,
     required PositiveNumberVO totalInvested,
     required PositiveNumberVO totalInvestedPercentage,
     required PositiveNumberVO totalToday,
     required PositiveNumberVO totalTodayPercentage,
     required PositiveNumberVO totalIncomes,
     required NumberVO balanceSales,
-  })  : _discriminator = discriminator,
-        _totalInvested = totalInvested,
+  })  : _totalInvested = totalInvested,
         _totalInvestedPercentage = totalInvestedPercentage,
         _totalToday = totalToday,
         _totalTodayPercentage = totalTodayPercentage,
         _totalIncomes = totalIncomes,
-        _balanceSales = balanceSales,
-        super(id: IdVO(discriminator.value)) {
+        _balanceSales = balanceSales {
     final double invested = totalInvested.value;
     final double valorization = totalToday.value - invested;
     _valorization = NumberVO(valorization);
@@ -43,7 +38,6 @@ class ConsolidationItem extends Entity {
     _resultPercentage = NumberVO(_result.value * 100 / invested);
   }
 
-  String get discriminator => _discriminator.value;
   double get totalInvested => _totalInvested.value;
   double get totalInvestedPercentage => _totalInvestedPercentage.value;
   double get totalToday => _totalToday.value;
@@ -59,7 +53,6 @@ class ConsolidationItem extends Entity {
   Result<ConsolidationItem, String> validate() {
     return super
         .validate()
-        .flatMap((_) => _discriminator.validate())
         .flatMap((_) => _totalInvested.validate())
         .flatMap((_) => _totalInvestedPercentage.validate())
         .flatMap((_) => _totalToday.validate())

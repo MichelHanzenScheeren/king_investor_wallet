@@ -13,7 +13,7 @@ class AssetTypeRating extends Entity {
     required RatingVO rating,
   })  : _type = type,
         _rating = rating,
-        super(id: IdVO(type.toString()));
+        super(id: IdVO(type.abbreviation));
 
   AssetTypeRating.asDefault({
     super.id,

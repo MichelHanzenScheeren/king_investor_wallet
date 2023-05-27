@@ -4,18 +4,13 @@ import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
-import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ConsolidationGroup extends Entity {
-  final SymbolVO _discriminator;
   late final ConsolidationItem totalConsolidation;
   final List<ConsolidationItem> _assetsConsolidation = [];
 
-  ConsolidationGroup(
-      {required SymbolVO discriminator, required List<Asset> filteredAssets})
-      : _discriminator = discriminator,
-        super(id: IdVO(discriminator.value)) {
+  ConsolidationGroup({required super.id, required List<Asset> filteredAssets}) {
     _consolidate(filteredAssets);
     _consolidateAssets(filteredAssets);
   }
@@ -24,15 +19,14 @@ class ConsolidationGroup extends Entity {
       List<ConsolidationItem>.unmodifiable(_assetsConsolidation);
 
   @override
-  Result<Entity, String> validate() {
+  Result<ConsolidationGroup, String> validate() {
     return super
         .validate()
-        .flatMap((_) => _discriminator.validate())
         .flatMap((_) => totalConsolidation.validate())
         .flatMap((_) => _assetsConsolidation
-            .map<Result<Entity, String>>((e) => e.validate())
-            .firstWhere((element) => element.isError(),
-                orElse: () => Success(this)))
+            .map<Result<ConsolidationGroup, String>>(
+                (e) => e.validate().pure(this))
+            .firstWhere((e) => e.isError(), orElse: () => Success(this)))
         .pure(this);
   }
 
@@ -48,7 +42,7 @@ class ConsolidationGroup extends Entity {
       balanceSales += asset.balanceSales;
     }
     totalConsolidation = ConsolidationItem(
-      discriminator: _discriminator,
+      id: IdVO(id),
       totalInvested: PositiveNumberVO(totalInvested),
       totalInvestedPercentage: PositiveNumberVO(100),
       totalToday: PositiveNumberVO(totalToday),
@@ -63,7 +57,7 @@ class ConsolidationGroup extends Entity {
       final totalInvested = asset.averagePrice * asset.quantity;
       final totalToday = asset.quote.price * asset.quantity;
       final assetConsolidation = ConsolidationItem(
-        discriminator: SymbolVO(asset.symbol),
+        id: IdVO(asset.symbol),
         totalInvested: PositiveNumberVO(totalInvested),
         totalInvestedPercentage: PositiveNumberVO(
           totalInvested * 100 / totalConsolidation.totalInvested,
