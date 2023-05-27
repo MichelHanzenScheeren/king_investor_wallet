@@ -41,7 +41,7 @@ void main() {
     });
 
     test('should be invalid when created with invalid data', () {
-      final item = invalidConsolidation();
+      final item = invalidConsolidationItem();
       expect(item.isValid, isFalse);
     });
 

@@ -14,11 +14,11 @@ ConsolidationResult validConsolidationResult() => ConsolidationResult(
     );
 
 ConsolidationResult invalidConsolidationResult() => ConsolidationResult(
-      totalConsolidation: validConsolidationItemWithValorization(),
+      totalConsolidation: invalidConsolidationItem(),
       allAssetsConsolidation: [
         validConsolidationItemWithDevaluation(),
         validConsolidationItemWithSalesLosses()
       ],
       assetTypesConsolidation: [validConsolidationItemWithIncomes()],
-      assetsGroupedByTypeConsolidation: [invalidConsolidationGroup()],
+      assetsGroupedByTypeConsolidation: [validConsolidationGroup()],
     );

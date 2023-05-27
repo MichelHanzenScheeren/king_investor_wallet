@@ -44,7 +44,7 @@ ConsolidationItem validConsolidationItemWithIncomes() => ConsolidationItem(
       balanceSales: NumberVO(-100),
     );
 
-ConsolidationItem invalidConsolidation() => ConsolidationItem(
+ConsolidationItem invalidConsolidationItem() => ConsolidationItem(
       id: IdVO('Total'),
       totalInvested: PositiveNumberVO(-500.0),
       totalInvestedPercentage: PositiveNumberVO(100),

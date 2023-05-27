@@ -8,5 +8,10 @@ void main() {
       final item = validConsolidationResult();
       expect(item.isValid, isTrue);
     });
+
+    test('should be invalid when invalid data was passed', () {
+      final item = invalidConsolidationResult();
+      expect(item.isValid, isFalse);
+    });
   });
 }
