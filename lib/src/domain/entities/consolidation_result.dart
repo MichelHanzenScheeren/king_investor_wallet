@@ -7,27 +7,29 @@ import 'package:result_dart/result_dart.dart';
 class ConsolidationResult extends Entity {
   final ConsolidationItem totalConsolidation;
   final List<ConsolidationItem> _allAssetsConsolidation;
-  final List<ConsolidationItem> _assetTypesConsolidation;
-  final List<ConsolidationGroup> _assetsGroupedByTypeConsolidation;
+  final List<ConsolidationItem> _categoriesConsolidation;
+  final List<ConsolidationGroup> _assetsGroupedByCategoryConsolidation;
 
   ConsolidationResult({
     super.id,
     required this.totalConsolidation,
     required List<ConsolidationItem> allAssetsConsolidation,
-    required List<ConsolidationItem> assetTypesConsolidation,
-    required List<ConsolidationGroup> assetsGroupedByTypeConsolidation,
+    required List<ConsolidationItem> categoriesConsolidation,
+    required List<ConsolidationGroup> assetsGroupedByCategoryConsolidation,
   })  : _allAssetsConsolidation = allAssetsConsolidation,
-        _assetTypesConsolidation = assetTypesConsolidation,
-        _assetsGroupedByTypeConsolidation = assetsGroupedByTypeConsolidation;
+        _categoriesConsolidation = categoriesConsolidation,
+        _assetsGroupedByCategoryConsolidation =
+            assetsGroupedByCategoryConsolidation;
 
   List<ConsolidationItem> get allAssetsConsolidation =>
       List<ConsolidationItem>.unmodifiable(_allAssetsConsolidation);
 
-  List<ConsolidationItem> get assetTypesConsolidation =>
-      List<ConsolidationItem>.unmodifiable(_assetTypesConsolidation);
+  List<ConsolidationItem> get categoriesConsolidation =>
+      List<ConsolidationItem>.unmodifiable(_categoriesConsolidation);
 
-  List<ConsolidationGroup> get assetsGroupedByTypeConsolidation =>
-      List<ConsolidationGroup>.unmodifiable(_assetsGroupedByTypeConsolidation);
+  List<ConsolidationGroup> get assetsGroupedByCategoryConsolidation =>
+      List<ConsolidationGroup>.unmodifiable(
+          _assetsGroupedByCategoryConsolidation);
 
   @override
   Result<ConsolidationResult, String> validate() {
@@ -35,8 +37,8 @@ class ConsolidationResult extends Entity {
         .validate()
         .flatMap((_) => totalConsolidation.validate())
         .flatMap((_) => _validateList(_allAssetsConsolidation))
-        .flatMap((_) => _validateList(_assetTypesConsolidation))
-        .flatMap((_) => _validateList(_assetsGroupedByTypeConsolidation))
+        .flatMap((_) => _validateList(_categoriesConsolidation))
+        .flatMap((_) => _validateList(_assetsGroupedByCategoryConsolidation))
         .pure(this);
   }
 

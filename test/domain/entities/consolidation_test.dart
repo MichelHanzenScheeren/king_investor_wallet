@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
+import 'package:king_investor_wallet/src/domain/enums/category.dart';
 import '../../mocks/domain/entities/consolidations.dart';
 
 void main() {
@@ -24,18 +24,18 @@ void main() {
     test('should correct generate results for passed asset categories', () {
       final item = consolidationWithValidAndInvalidAssets2();
       final consolidation = item.consolidate().getOrThrow();
-      final categoriesCons = consolidation.assetTypesConsolidation;
+      final categoriesCons = consolidation.categoriesConsolidation;
       expect(categoriesCons, hasLength(2));
     });
 
     test('should correct generate results for stocks category', () {
       final item = consolidationWithValidAndInvalidAssets2();
       final consolidation = item.consolidate().getOrThrow();
-      final categoriesCons = consolidation.assetTypesConsolidation;
+      final categoriesCons = consolidation.categoriesConsolidation;
 
       final first = categoriesCons.first;
       expect(first.isValid, isTrue);
-      expect(first.id, equals(AssetType.stock.abbreviation));
+      expect(first.id, equals(Category.stock.abbreviation));
       expect(first.totalInvested, equals(225.8));
       expect(first.totalInvestedPercentage.toStringAsFixed(2), equals('70.17'));
       expect(first.totalToday, equals(363.6));

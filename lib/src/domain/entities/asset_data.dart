@@ -1,4 +1,4 @@
-import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
+import 'package:king_investor_wallet/src/domain/enums/category.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/rating_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
@@ -21,7 +21,7 @@ class AssetData extends AssetBase {
     required super.currency,
     required super.country,
     required super.name,
-    required super.type,
+    required super.category,
     required PositiveIntegerVO quantity,
     required PositiveNumberVO averagePrice,
     PositiveNumberVO? totalIncomes,
@@ -45,7 +45,7 @@ class AssetData extends AssetBase {
           currency: SymbolVO(assetBase.currency),
           country: TextVO(assetBase.country),
           name: TextVO(assetBase.name),
-          type: assetBase.type,
+          category: assetBase.category,
           quantity: quantity,
           averagePrice: averagePrice,
           totalIncomes: totalIncomes,
@@ -73,7 +73,7 @@ class AssetData extends AssetBase {
   @override
   Result<AssetData, String> update({
     TextVO? name,
-    AssetType? type,
+    Category? category,
     PositiveIntegerVO? quantity,
     PositiveNumberVO? averagePrice,
     PositiveNumberVO? totalIncomes,
@@ -86,7 +86,7 @@ class AssetData extends AssetBase {
         .flatMap((_) => _validate(balanceSales))
         .pure(this);
     if (result.isError()) return result;
-    final fatherUpdate = super.update(name: name, type: type);
+    final fatherUpdate = super.update(name: name, category: category);
     if (fatherUpdate.isError()) return fatherUpdate.pure(this);
 
     _quantity = quantity ?? _quantity;

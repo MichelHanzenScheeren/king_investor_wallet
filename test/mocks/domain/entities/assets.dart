@@ -1,5 +1,5 @@
 import 'package:king_investor_wallet/src/domain/entities/asset.dart';
-import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
+import 'package:king_investor_wallet/src/domain/enums/category.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
@@ -13,7 +13,7 @@ Asset validAssetWeg3() => Asset(
       currency: SymbolVO('BRL'),
       country: TextVO('Brazil'),
       name: TextVO('WEG S.A'),
-      type: AssetType.stock,
+      category: Category.stock,
       quantity: PositiveIntegerVO(2),
       averagePrice: PositiveNumberVO(20.5),
       quote: validQuoteWithRandomId1(),
@@ -26,7 +26,7 @@ Asset invalidAssetWeg3() => Asset(
       currency: SymbolVO('BRL'),
       country: TextVO('Brazil'),
       name: TextVO('WEG S.A'),
-      type: AssetType.stock,
+      category: Category.stock,
       quantity: PositiveIntegerVO(-1),
       averagePrice: PositiveNumberVO(20.5),
       quote: invalidQuoteWithInvalidPrice(),
@@ -37,7 +37,7 @@ Asset validAssetHGRU11() => Asset(
       currency: SymbolVO('BRL'),
       country: TextVO('Brazil'),
       name: TextVO('CSHG Renda Urbana Fundo Investimento Imobiliário - FII'),
-      type: AssetType.reit,
+      category: Category.reit,
       averagePrice: PositiveNumberVO(12.0),
       quantity: PositiveIntegerVO(8),
       quote: validQuoteWithStaticId2(),
@@ -50,7 +50,7 @@ Asset invalidAssetWithInvalidSymbol() => Asset(
       currency: SymbolVO('BRL'),
       country: TextVO('Brazil'),
       name: TextVO('WEG S.A'),
-      type: AssetType.stock,
+      category: Category.stock,
       quantity: PositiveIntegerVO(-1),
       averagePrice: PositiveNumberVO(20.5),
       quote: invalidQuoteWithInvalidPrice(),
@@ -61,7 +61,7 @@ Asset validAssetItub3() => Asset(
       currency: SymbolVO('BRL'),
       country: TextVO('Brazil'),
       name: TextVO('Itaú Unibanco'),
-      type: AssetType.stock,
+      category: Category.stock,
       quantity: PositiveIntegerVO(6),
       averagePrice: PositiveNumberVO(30.8),
       quote: validQuoteWithRandomId2(),

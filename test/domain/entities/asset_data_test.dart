@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:king_investor_wallet/src/domain/entities/asset_data.dart';
-import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
+import 'package:king_investor_wallet/src/domain/enums/category.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
@@ -174,7 +174,7 @@ void main() {
       final item = validAssetDataWeg3WithIncome();
       final response = item.update(
         name: TextVO('Meu novo nome'),
-        type: AssetType.reit,
+        category: Category.reit,
         quantity: PositiveIntegerVO(8),
         averagePrice: PositiveNumberVO(50.5),
         balanceSales: PositiveNumberVO(70),
@@ -182,7 +182,7 @@ void main() {
       );
       expect(response, isA<Success>());
       expect(item.name, equals('Meu Novo Nome'));
-      expect(item.type, equals(AssetType.reit));
+      expect(item.category, equals(Category.reit));
       expect(item.quantity, equals(8));
       expect(item.averagePrice, equals(50.5));
       expect(item.balanceSales, equals(70));

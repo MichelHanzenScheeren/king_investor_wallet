@@ -1,6 +1,6 @@
 import 'package:king_investor_wallet/src/domain/entities/asset_data.dart';
 import 'package:king_investor_wallet/src/domain/entities/quote.dart';
-import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
+import 'package:king_investor_wallet/src/domain/enums/category.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
@@ -17,7 +17,7 @@ class Asset extends AssetData {
     required SymbolVO currency,
     required TextVO country,
     required TextVO name,
-    required AssetType type,
+    required Category category,
     required PositiveIntegerVO quantity,
     required PositiveNumberVO averagePrice,
     NumberVO? balanceSales,
@@ -29,7 +29,7 @@ class Asset extends AssetData {
           currency: currency,
           country: country,
           name: name,
-          type: type,
+          category: category,
           quantity: quantity,
           averagePrice: averagePrice,
           balanceSales: balanceSales,
@@ -45,7 +45,7 @@ class Asset extends AssetData {
           currency: SymbolVO(assetData.currency),
           country: TextVO(assetData.country),
           name: TextVO(assetData.name),
-          type: assetData.type,
+          category: assetData.category,
           quantity: PositiveIntegerVO(assetData.quantity),
           averagePrice: PositiveNumberVO(assetData.averagePrice),
           balanceSales: NumberVO(assetData.balanceSales),

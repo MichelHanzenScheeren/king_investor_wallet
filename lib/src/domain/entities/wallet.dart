@@ -1,5 +1,5 @@
 import 'package:king_investor_wallet/src/domain/entities/asset.dart';
-import 'package:king_investor_wallet/src/domain/entities/asset_type_rating_group.dart';
+import 'package:king_investor_wallet/src/domain/entities/category_rating_group.dart';
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:result_dart/result_dart.dart';
@@ -8,30 +8,31 @@ class Wallet extends Entity {
   TextVO _name;
   bool _isDefault;
   final List<Asset> _assets;
-  final AssetTypeRatingGroup _typesRatings;
+  final CategoryRatingGroup _categoriesRatings;
 
   Wallet({
     super.id,
     required TextVO name,
     required bool isDefault,
     List<Asset>? assets,
-    AssetTypeRatingGroup? typesRatings,
+    CategoryRatingGroup? categoriesRatings,
   })  : _name = name,
         _isDefault = isDefault,
         _assets = assets ?? [],
-        _typesRatings = typesRatings ?? AssetTypeRatingGroup.fromDefault();
+        _categoriesRatings =
+            categoriesRatings ?? CategoryRatingGroup.fromDefault();
 
   String get name => _name.value;
   bool get isDefault => _isDefault;
   List<Asset> get assets => List<Asset>.unmodifiable(_assets);
-  AssetTypeRatingGroup get typesRatings => _typesRatings;
+  CategoryRatingGroup get categoriesRatings => _categoriesRatings;
 
   @override
   Result<Wallet, String> validate() {
     return super
         .validate()
         .flatMap((_) => _name.validate())
-        .flatMap((_) => _typesRatings.validate())
+        .flatMap((_) => _categoriesRatings.validate())
         .pure(this);
   }
 

@@ -2,7 +2,7 @@ import 'package:king_investor_wallet/src/domain/entities/wallet.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 
-import 'asset_type_rating_groups.dart';
+import 'category_rating_groups.dart';
 import 'assets.dart';
 
 Wallet validWallet() => Wallet(
@@ -18,18 +18,18 @@ Wallet validWalletWithAssets() => Wallet(
       assets: [validAssetWeg3()],
     );
 
-Wallet validWalletWithAssetsAndAssetTypeRatings() => Wallet(
+Wallet validWalletWithAssetsAndCategoryRatings() => Wallet(
       id: IdVO(null),
       name: TextVO('Carteira principal'),
       isDefault: false,
       assets: [validAssetWeg3(), validAssetHGRU11()],
-      typesRatings: validAssetTypeRatingGroup(),
+      categoriesRatings: validCategoryRatingGroup(),
     );
 
-Wallet invalidWalletWithAssetTypeRatings() => Wallet(
+Wallet invalidWalletWithCategoryRatings() => Wallet(
       id: IdVO(null),
       name: TextVO('Carteira principal'),
       isDefault: false,
       assets: [validAssetWeg3(), validAssetHGRU11()],
-      typesRatings: invalidAssetTypeRatingGroup(),
+      categoriesRatings: invalidCategoryRatingGroup(),
     );

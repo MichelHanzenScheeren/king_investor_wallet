@@ -9,8 +9,8 @@ ConsolidationResult validConsolidationResult() => ConsolidationResult(
         validConsolidationItemWithDevaluation(),
         validConsolidationItemWithSalesLosses()
       ],
-      assetTypesConsolidation: [validConsolidationItemWithIncomes()],
-      assetsGroupedByTypeConsolidation: [validConsolidationGroup()],
+      categoriesConsolidation: [validConsolidationItemWithIncomes()],
+      assetsGroupedByCategoryConsolidation: [validConsolidationGroup()],
     );
 
 ConsolidationResult invalidConsolidationResult() => ConsolidationResult(
@@ -19,6 +19,6 @@ ConsolidationResult invalidConsolidationResult() => ConsolidationResult(
         validConsolidationItemWithDevaluation(),
         validConsolidationItemWithSalesLosses()
       ],
-      assetTypesConsolidation: [validConsolidationItemWithIncomes()],
-      assetsGroupedByTypeConsolidation: [validConsolidationGroup()],
+      categoriesConsolidation: [validConsolidationItemWithIncomes()],
+      assetsGroupedByCategoryConsolidation: [validConsolidationGroup()],
     );

@@ -4,7 +4,7 @@ import 'package:king_investor_wallet/src/domain/entities/consolidation_group.dar
 import 'package:king_investor_wallet/src/domain/entities/consolidation_item.dart';
 import 'package:king_investor_wallet/src/domain/entities/consolidation_result.dart';
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
-import 'package:king_investor_wallet/src/domain/enums/asset_type.dart';
+import 'package:king_investor_wallet/src/domain/enums/category.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
@@ -48,13 +48,15 @@ class Consolidation extends Entity {
     final totalRelatedToAllAssets = _consolidateTotals();
     final totalConsolidation = totalRelatedToAllAssets.totalConsolidation;
     final allAssetsConsolidation = totalRelatedToAllAssets.assetsConsolidation;
-    final assetTypesConsolidation = _consolidateAssetTypes(totalConsolidation);
-    final assetsGroupedByTypeConsolidation = _consolidateAssetsGroupedByType();
+    final categoriesConsolidation = _consolidateCategories(totalConsolidation);
+    final assetsGroupedByCategoryConsolidation =
+        _consolidateAssetsGroupedByCategory();
     return Success(ConsolidationResult(
       totalConsolidation: totalConsolidation,
       allAssetsConsolidation: allAssetsConsolidation,
-      assetTypesConsolidation: assetTypesConsolidation,
-      assetsGroupedByTypeConsolidation: assetsGroupedByTypeConsolidation,
+      categoriesConsolidation: categoriesConsolidation,
+      assetsGroupedByCategoryConsolidation:
+          assetsGroupedByCategoryConsolidation,
     ));
   }
 
@@ -65,12 +67,12 @@ class Consolidation extends Entity {
     );
   }
 
-  List<ConsolidationItem> _consolidateAssetTypes(ConsolidationItem totals) {
+  List<ConsolidationItem> _consolidateCategories(ConsolidationItem totals) {
     final List<ConsolidationItem> result = [];
-    for (var type in AssetType.values) {
-      final consolidation = _consolidateType(
+    for (var type in Category.values) {
+      final consolidation = _consolidateCategory(
         type: type,
-        filtered: _filterByAssetType(type, _validAssets),
+        filtered: _filterByCategory(type, _validAssets),
         totals: totals,
       );
       result.add(consolidation);
@@ -78,8 +80,8 @@ class Consolidation extends Entity {
     return result;
   }
 
-  ConsolidationItem _consolidateType({
-    required AssetType type,
+  ConsolidationItem _consolidateCategory({
+    required Category type,
     required List<Asset> filtered,
     required ConsolidationItem totals,
   }) {
@@ -108,19 +110,19 @@ class Consolidation extends Entity {
     );
   }
 
-  List<ConsolidationGroup> _consolidateAssetsGroupedByType() {
+  List<ConsolidationGroup> _consolidateAssetsGroupedByCategory() {
     final List<ConsolidationGroup> results = [];
-    for (AssetType type in AssetType.values) {
+    for (Category category in Category.values) {
       final consolidation = ConsolidationGroup(
-        id: IdVO(type.abbreviation),
-        filteredAssets: _filterByAssetType(type, _validAssets),
+        id: IdVO(category.abbreviation),
+        filteredAssets: _filterByCategory(category, _validAssets),
       );
       results.add(consolidation);
     }
     return results;
   }
 
-  List<Asset> _filterByAssetType(AssetType type, List<Asset> original) {
-    return List.from(original.where((element) => element.type == type));
+  List<Asset> _filterByCategory(Category type, List<Asset> original) {
+    return List.from(original.where((element) => element.category == type));
   }
 }
