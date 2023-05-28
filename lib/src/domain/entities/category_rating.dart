@@ -22,7 +22,7 @@ class CategoryRating extends Entity {
         _rating = RatingVO.asDefault();
 
   Category get type => _type;
-  int get rating => _rating.value;
+  double get rating => _rating.value;
 
   @override
   Result<CategoryRating, String> validate() =>

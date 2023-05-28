@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/rating_vo.dart';
 
-const invalidIntMessage = 'Número inteiro inválido';
-const outOfRangeMessage = 'A nota precisa ser um número inteiro entre 0 e 10';
+const invalidIntMessage = 'Número inválido';
+const outOfRangeMessage = 'A nota precisa ser um número entre 0 e 10';
 
 void main() {
   group('RatingVO', () {
@@ -16,8 +16,8 @@ void main() {
       expect(item.isValid, isTrue);
     });
 
-    test('should cbe invalid if invalid int (super validation)', () {
-      final item = RatingVO(7.5);
+    test('should be invalid if invalid double (super validation)', () {
+      final item = RatingVO('');
       expect(item.isValid, isFalse);
       expect(item.validate().exceptionOrNull(), equals(invalidIntMessage));
     });

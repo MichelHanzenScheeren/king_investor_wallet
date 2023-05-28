@@ -57,7 +57,7 @@ class AssetData extends AssetBase {
   double get averagePrice => _averagePrice.value;
   double get totalIncomes => _totalIncomes.value;
   double get balanceSales => _balanceSales.value;
-  int get rating => _rating.value;
+  double get rating => _rating.value;
 
   @override
   Result<AssetData, String> validate() {
