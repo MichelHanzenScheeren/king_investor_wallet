@@ -69,10 +69,10 @@ class Consolidation extends Entity {
 
   List<ConsolidationItem> _consolidateCategories(ConsolidationItem totals) {
     final List<ConsolidationItem> result = [];
-    for (var type in Category.values) {
+    for (var category in Category.values) {
       final consolidation = _consolidateCategory(
-        type: type,
-        filtered: _filterByCategory(type, _validAssets),
+        category: category,
+        filtered: _filterByCategory(category, _validAssets),
         totals: totals,
       );
       result.add(consolidation);
@@ -81,7 +81,7 @@ class Consolidation extends Entity {
   }
 
   ConsolidationItem _consolidateCategory({
-    required Category type,
+    required Category category,
     required List<Asset> filtered,
     required ConsolidationItem totals,
   }) {
@@ -96,7 +96,7 @@ class Consolidation extends Entity {
       balanceSales += asset.balanceSales;
     }
     return ConsolidationItem(
-      id: IdVO(type.abbreviation),
+      id: IdVO(category.abbreviation),
       totalInvested: PositiveNumberVO(totalInvested),
       totalInvestedPercentage: PositiveNumberVO(
         totalInvested * 100 / totals.totalInvested,
@@ -122,7 +122,7 @@ class Consolidation extends Entity {
     return results;
   }
 
-  List<Asset> _filterByCategory(Category type, List<Asset> original) {
-    return List.from(original.where((element) => element.category == type));
+  List<Asset> _filterByCategory(Category category, List<Asset> original) {
+    return List.from(original.where((element) => element.category == category));
   }
 }

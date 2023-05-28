@@ -5,23 +5,23 @@ import 'package:king_investor_wallet/src/domain/value_objects/rating_vo.dart';
 import 'package:result_dart/result_dart.dart';
 
 class CategoryRating extends Entity {
-  final Category _type;
+  final Category _category;
   final RatingVO _rating;
 
   CategoryRating({
-    required Category type,
+    required Category category,
     required RatingVO rating,
-  })  : _type = type,
+  })  : _category = category,
         _rating = rating,
-        super(id: IdVO(type.abbreviation));
+        super(id: IdVO(category.abbreviation));
 
   CategoryRating.asDefault({
     super.id,
-    required Category type,
-  })  : _type = type,
+    required Category category,
+  })  : _category = category,
         _rating = RatingVO.asDefault();
 
-  Category get type => _type;
+  Category get category => _category;
   double get rating => _rating.value;
 
   @override

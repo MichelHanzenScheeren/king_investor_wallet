@@ -24,9 +24,9 @@ class CategoryRatingGroup extends Entity {
       return categoriesRating;
     }
     return List.from(Category.values.map<CategoryRating>(
-      (type) => categoriesRating.firstWhere(
-        (item) => item.type == type,
-        orElse: () => CategoryRating.asDefault(type: type),
+      (category) => categoriesRating.firstWhere(
+        (item) => item.category == category,
+        orElse: () => CategoryRating.asDefault(category: category),
       ),
     ));
   }
@@ -34,7 +34,7 @@ class CategoryRatingGroup extends Entity {
   List<CategoryRating> _generateDefaultCategoriesRating() {
     return List.from(
       Category.values.map<CategoryRating>(
-        (e) => CategoryRating.asDefault(type: e),
+        (e) => CategoryRating.asDefault(category: e),
       ),
     );
   }
