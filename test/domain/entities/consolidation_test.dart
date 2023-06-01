@@ -6,8 +6,8 @@ void main() {
   group('ConsolidationResult', () {
     test('should correct separe valid and invalid assets', () {
       final item = consolidationWithValidAndInvalidAssets();
-      expect(item.validAssets, hasLength(2));
-      expect(item.invalidAssets, hasLength(3));
+      expect(item.validAssets, hasLength(3));
+      expect(item.invalidAssets, hasLength(2));
     });
 
     test('should correct validate according to assets', () {
@@ -22,26 +22,26 @@ void main() {
     });
 
     test('should correct generate results for passed asset categories', () {
-      final item = consolidationWithValidAndInvalidAssets2();
+      final item = consolidationWithValidAndInvalidAssets();
       final consolidation = item.consolidate().getOrThrow();
       final categoriesCons = consolidation.categoriesConsolidation;
       expect(categoriesCons, hasLength(2));
     });
 
-    test('should correct generate results for stocks category', () {
-      final item = consolidationWithValidAndInvalidAssets2();
+    test('should correct generate results for stock category', () {
+      final item = consolidationWithValidAndInvalidAssets();
       final consolidation = item.consolidate().getOrThrow();
       final categoriesCons = consolidation.categoriesConsolidation;
 
       final first = categoriesCons.first;
       expect(first.isValid, isTrue);
       expect(first.id, equals(Category.stock.abbreviation));
-      expect(first.totalInvested, equals(225.8));
-      expect(first.totalInvestedPercentage.toStringAsFixed(2), equals('70.17'));
-      expect(first.totalToday, equals(363.6));
-      expect(first.totalTodayPercentage.toStringAsFixed(2), equals('90.99'));
-      expect(first.totalIncomes, equals(27));
-      expect(first.balanceSales, equals(5));
+      expect(first.totalInvested, equals(640.22));
+      expect(first.totalInvestedPercentage, equals(50.8406));
+      expect(first.totalToday, equals(592.41));
+      expect(first.totalTodayPercentage, equals(48.7536));
+      expect(first.totalIncomes, equals(15));
+      expect(first.balanceSales, equals(160));
     });
   });
 }

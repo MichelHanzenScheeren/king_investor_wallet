@@ -64,7 +64,7 @@ void main() {
     test('should not register movement if not enough quantity', () {
       final item = RebalancingResult(
         maxAssets: PositiveIntegerVO(1),
-        totalMoney: PositiveNumberVO(80),
+        totalMoney: PositiveNumberVO(200),
       );
       item.registerMovement(validAssetWeg3());
       final response = item.registerMovement(validAssetHGRU11());
@@ -105,7 +105,7 @@ void main() {
     test('should correct register movements', () {
       final item = RebalancingResult(
         maxAssets: PositiveIntegerVO(2),
-        totalMoney: PositiveNumberVO(100),
+        totalMoney: PositiveNumberVO(200),
       );
       item.registerMovement(validAssetWeg3());
       item.registerMovement(validAssetHGRU11());

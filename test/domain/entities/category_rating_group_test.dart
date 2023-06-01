@@ -6,7 +6,7 @@ import '../../mocks/domain/entities/category_rating_groups.dart';
 void main() {
   group('CategoryRatingGroup', () {
     test('should be valid if valid data', () {
-      final item = validCategoryRatingGroup();
+      final item = validDefaultCategoryRatingGroup();
       expect(item.isValid, isTrue);
       expect(item.categoriesRating.length, Category.values.length);
     });

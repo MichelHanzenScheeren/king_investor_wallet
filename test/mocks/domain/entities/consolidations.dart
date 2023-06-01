@@ -4,25 +4,16 @@ import 'assets.dart';
 Consolidation consolidationWithValidAndInvalidAssets() => Consolidation(
       assets: [
         validAssetWeg3(),
-        invalidAssetWithInvalidSymbol(),
         invalidAssetWeg3(),
         validAssetHGRU11(),
-        invalidAssetWeg3(),
+        validAssetFLRY3(),
+        invalidAssetPSSA3(),
       ],
     );
 
 Consolidation consolidationWithOnlyInvalidAssets() => Consolidation(
       assets: [
-        invalidAssetWithInvalidSymbol(),
+        invalidAssetPSSA3(),
         invalidAssetWeg3(),
-      ],
-    );
-
-Consolidation consolidationWithValidAndInvalidAssets2() => Consolidation(
-      assets: [
-        validAssetWeg3(),
-        invalidAssetWeg3(),
-        validAssetHGRU11(),
-        validAssetItub3(),
       ],
     );

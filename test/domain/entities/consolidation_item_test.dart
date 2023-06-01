@@ -26,9 +26,9 @@ void main() {
       final item = validConsolidationItemWithSalesLosses();
       expect(item.isValid, isTrue);
       expect(item.valorization, equals(90));
-      expect(item.valorizationPercentage.toStringAsFixed(2), equals('21.43'));
+      expect(item.valorizationPercentage, equals(21.4286));
       expect(item.result, equals(-140));
-      expect(item.resultPercentage.toStringAsFixed(2), equals('-33.33'));
+      expect(item.resultPercentage, equals(-33.3333));
     });
 
     test('should be valid when created (with incomes)', () {

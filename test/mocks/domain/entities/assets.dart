@@ -8,19 +8,6 @@ import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 
 import 'quotes.dart';
 
-Asset validAssetWeg3() => Asset(
-      symbol: SymbolVO('WEGE3.SAO'),
-      currency: SymbolVO('BRL'),
-      country: TextVO('Brazil'),
-      name: TextVO('WEG S.A'),
-      category: Category.stock,
-      quantity: PositiveIntegerVO(2),
-      averagePrice: PositiveNumberVO(20.5),
-      quote: validQuoteWithRandomId1(),
-      totalIncomes: PositiveNumberVO(15.0),
-      balanceSales: NumberVO(5),
-    );
-
 Asset invalidAssetWeg3() => Asset(
       symbol: SymbolVO('WEGE3.SAO'),
       currency: SymbolVO('BRL'),
@@ -32,39 +19,106 @@ Asset invalidAssetWeg3() => Asset(
       quote: invalidQuoteWithInvalidPrice(),
     );
 
-Asset validAssetHGRU11() => Asset(
-      symbol: SymbolVO('HGRU11.SAO'),
+Asset invalidAssetPSSA3() => Asset(
+      symbol: SymbolVO('PSSA3.SAO'),
       currency: SymbolVO('BRL'),
       country: TextVO('Brazil'),
-      name: TextVO('CSHG Renda Urbana Fundo Investimento Imobiliário - FII'),
-      category: Category.reit,
-      averagePrice: PositiveNumberVO(12.0),
-      quantity: PositiveIntegerVO(8),
-      quote: validQuoteWithStaticId2(),
-      totalIncomes: PositiveNumberVO(10.0),
-      balanceSales: NumberVO(-2),
+      name: TextVO('Porto seguro'),
+      category: Category.stock,
+      quantity: PositiveIntegerVO(null),
+      averagePrice: PositiveNumberVO(26.88),
+      quote: validQuotePSSA3(),
+      totalIncomes: PositiveNumberVO(0),
+      balanceSales: NumberVO(0),
     );
 
-Asset invalidAssetWithInvalidSymbol() => Asset(
-      symbol: SymbolVO(''),
+Asset validAssetWeg3() => Asset(
+      symbol: SymbolVO('WEGE3.SAO'),
       currency: SymbolVO('BRL'),
       country: TextVO('Brazil'),
       name: TextVO('WEG S.A'),
       category: Category.stock,
-      quantity: PositiveIntegerVO(-1),
-      averagePrice: PositiveNumberVO(20.5),
-      quote: invalidQuoteWithInvalidPrice(),
+      quantity: PositiveIntegerVO(9),
+      averagePrice: PositiveNumberVO(25.34),
+      quote: validQuoteWEGE3(),
+      totalIncomes: PositiveNumberVO(15.0),
+      balanceSales: NumberVO(-20),
     );
 
-Asset validAssetItub3() => Asset(
-      symbol: SymbolVO('ITUB3.SAO'),
+Asset validAssetPSSA3() => Asset(
+      symbol: SymbolVO('PSSA3.SAO'),
       currency: SymbolVO('BRL'),
       country: TextVO('Brazil'),
-      name: TextVO('Itaú Unibanco'),
+      name: TextVO('Porto seguro'),
       category: Category.stock,
+      quantity: PositiveIntegerVO(19),
+      averagePrice: PositiveNumberVO(26.88),
+      quote: validQuotePSSA3(),
+      totalIncomes: PositiveNumberVO(0),
+      balanceSales: NumberVO(0),
+    );
+
+Asset validAssetMDIA3() => Asset(
+      symbol: SymbolVO('MDIA3.SAO'),
+      currency: SymbolVO('BRL'),
+      country: TextVO('Brazil'),
+      name: TextVO('M dias'),
+      category: Category.stock,
+      quantity: PositiveIntegerVO(10),
+      averagePrice: PositiveNumberVO(32.45),
+      quote: validQuoteMDIA3(),
+      totalIncomes: PositiveNumberVO(0),
+      balanceSales: NumberVO(0),
+    );
+
+Asset validAssetTOTS3() => Asset(
+      symbol: SymbolVO('TOTS3.SAO'),
+      currency: SymbolVO('BRL'),
+      country: TextVO('Brazil'),
+      name: TextVO('TOTS Tecnologia'),
+      category: Category.stock,
+      quantity: PositiveIntegerVO(10),
+      averagePrice: PositiveNumberVO(26.76),
+      quote: validQuoteTOTS3(),
+      totalIncomes: PositiveNumberVO(0),
+      balanceSales: NumberVO(0),
+    );
+
+Asset validAssetFLRY3() => Asset(
+      symbol: SymbolVO('FLRY3.SAO'),
+      currency: SymbolVO('BRL'),
+      country: TextVO('Brazil'),
+      name: TextVO('Fleury Saúde'),
+      category: Category.stock,
+      quantity: PositiveIntegerVO(16),
+      averagePrice: PositiveNumberVO(25.76),
+      quote: validQuoteFLRY3(),
+      totalIncomes: PositiveNumberVO(0),
+      balanceSales: NumberVO(180),
+    );
+
+Asset validAssetHGRU11() => Asset(
+      symbol: SymbolVO('HGRU11.SAO'),
+      currency: SymbolVO('BRL'),
+      country: TextVO('Brazil'),
+      name: TextVO('HGRU Fundos'),
+      category: Category.reit,
+      quantity: PositiveIntegerVO(5),
+      averagePrice: PositiveNumberVO(123.81),
+      quote: validQuoteHGRU11(),
+      totalIncomes: PositiveNumberVO(25),
+      balanceSales: NumberVO(0),
+    );
+
+Asset validAssetXPML11() => Asset(
+      symbol: SymbolVO('XPML11.SAO'),
+      currency: SymbolVO('BRL'),
+      country: TextVO('Brazil'),
+      name: TextVO('XPML Fundos'),
+      category: Category.reit,
       quantity: PositiveIntegerVO(6),
-      averagePrice: PositiveNumberVO(30.8),
-      quote: validQuoteWithRandomId2(),
-      totalIncomes: PositiveNumberVO(12.0),
+      averagePrice: PositiveNumberVO(101.57),
+      quote: validQuoteXPML11(),
+      totalIncomes: PositiveNumberVO(0),
       balanceSales: NumberVO(0),
     );

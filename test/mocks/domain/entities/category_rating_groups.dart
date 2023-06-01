@@ -3,10 +3,18 @@ import 'package:king_investor_wallet/src/domain/entities/category_rating_group.d
 import 'package:king_investor_wallet/src/domain/enums/category.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/rating_vo.dart';
 
-CategoryRatingGroup validCategoryRatingGroup() => CategoryRatingGroup(
+CategoryRatingGroup validDefaultCategoryRatingGroup() => CategoryRatingGroup(
       categoriesRating: [
         CategoryRating.asDefault(category: Category.stock),
         CategoryRating.asDefault(category: Category.reit),
+      ],
+    );
+
+CategoryRatingGroup validCategoryRatingGroupWithPersonalRatings() =>
+    CategoryRatingGroup(
+      categoriesRating: [
+        CategoryRating(category: Category.stock, rating: RatingVO(85)),
+        CategoryRating(category: Category.reit, rating: RatingVO(25)),
       ],
     );
 

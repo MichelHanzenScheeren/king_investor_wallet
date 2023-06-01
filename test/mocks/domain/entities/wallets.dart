@@ -23,7 +23,7 @@ Wallet validWalletWithAssetsAndCategoryRatings() => Wallet(
       name: TextVO('Carteira principal'),
       isDefault: false,
       assets: [validAssetWeg3(), validAssetHGRU11()],
-      categoriesRatings: validCategoryRatingGroup(),
+      categoriesRatings: validDefaultCategoryRatingGroup(),
     );
 
 Wallet invalidWalletWithCategoryRatings() => Wallet(

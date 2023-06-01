@@ -39,8 +39,8 @@ class Asset extends AssetData {
 
   Asset.fromData({
     required AssetData assetData,
-    required this.quote,
-  }) : super(
+    required Quote quote,
+  }) : this(
           symbol: SymbolVO(assetData.symbol),
           currency: SymbolVO(assetData.currency),
           country: TextVO(assetData.country),
@@ -51,6 +51,23 @@ class Asset extends AssetData {
           balanceSales: NumberVO(assetData.balanceSales),
           totalIncomes: PositiveNumberVO(assetData.totalIncomes),
           rating: RatingVO(assetData.rating),
+          quote: quote,
+        );
+
+  Asset.copy({
+    required Asset asset,
+  }) : this(
+          symbol: SymbolVO(asset.symbol),
+          currency: SymbolVO(asset.currency),
+          country: TextVO(asset.country),
+          name: TextVO(asset.name),
+          category: asset.category,
+          quantity: PositiveIntegerVO(asset.quantity),
+          averagePrice: PositiveNumberVO(asset.averagePrice),
+          balanceSales: NumberVO(asset.balanceSales),
+          totalIncomes: PositiveNumberVO(asset.totalIncomes),
+          rating: RatingVO(asset.rating),
+          quote: asset.quote,
         );
 
   @override
