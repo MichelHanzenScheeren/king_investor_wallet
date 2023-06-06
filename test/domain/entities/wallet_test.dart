@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:king_investor_wallet/src/domain/entities/wallet.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -98,6 +99,12 @@ void main() {
     test('should be invalid if receive invalid CategoryRating', () {
       final item = invalidWalletWithCategoryRatings();
       expect(item.isValid, isFalse);
+    });
+
+    test('should be valid when created with named constructor', () {
+      final item = Wallet.fromDefault();
+      expect(item.isValid, isTrue);
+      expect(item.isDefault, isTrue);
     });
   });
 }

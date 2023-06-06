@@ -22,6 +22,8 @@ class Wallet extends Entity {
         _categoriesRatings =
             categoriesRatings ?? CategoryRatingGroup.fromDefault();
 
+  Wallet.fromDefault() : this(name: TextVO('Principal'), isDefault: true);
+
   String get name => _name.value;
   bool get isDefault => _isDefault;
   List<Asset> get assets => List<Asset>.unmodifiable(_assets);
