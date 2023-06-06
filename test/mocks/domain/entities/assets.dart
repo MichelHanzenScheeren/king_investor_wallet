@@ -3,6 +3,7 @@ import 'package:king_investor_wallet/src/domain/enums/category.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
+import 'package:king_investor_wallet/src/domain/value_objects/rating_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 
@@ -43,6 +44,20 @@ Asset validAssetWeg3() => Asset(
       quote: validQuoteWEGE3(),
       totalIncomes: PositiveNumberVO(15.0),
       balanceSales: NumberVO(-20),
+    );
+
+Asset validAssetWeg3WithDifferentRating() => Asset(
+      symbol: SymbolVO('WEGE3.SAO'),
+      currency: SymbolVO('BRL'),
+      country: TextVO('Brazil'),
+      name: TextVO('WEG S.A'),
+      category: Category.stock,
+      quantity: PositiveIntegerVO(9),
+      averagePrice: PositiveNumberVO(25.34),
+      quote: validQuoteWEGE3(),
+      totalIncomes: PositiveNumberVO(15.0),
+      balanceSales: NumberVO(-20),
+      rating: RatingVO(7),
     );
 
 Asset validAssetPSSA3() => Asset(

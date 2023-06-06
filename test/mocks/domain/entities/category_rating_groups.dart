@@ -13,8 +13,8 @@ CategoryRatingGroup validDefaultCategoryRatingGroup() => CategoryRatingGroup(
 CategoryRatingGroup validCategoryRatingGroupWithPersonalRatings() =>
     CategoryRatingGroup(
       categoriesRating: [
-        CategoryRating(category: Category.stock, rating: RatingVO(85)),
-        CategoryRating(category: Category.reit, rating: RatingVO(25)),
+        CategoryRating(category: Category.stock, rating: RatingVO(7)),
+        CategoryRating(category: Category.reit, rating: RatingVO(3)),
       ],
     );
 
