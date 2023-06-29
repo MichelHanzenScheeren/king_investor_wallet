@@ -17,6 +17,9 @@ class User extends UserData {
       : _email = email,
         super(name: name);
 
+  User.fromData({IdVO? id, required EmailVO email, required UserData userData})
+      : this(id: id, email: email, name: TextVO(userData.name));
+
   String get email => _email.value;
 
   @override
