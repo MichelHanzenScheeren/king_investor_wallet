@@ -62,7 +62,7 @@ void main() {
       final result = item.addAsset(validAssetWeg3());
       expect(result, isA<Failure>());
       expect(
-        result.exceptionOrNull(),
+        result.exceptionOrNull().toString(),
         equals('$repeatedAsset (${validAssetWeg3().symbol})'),
       );
     });

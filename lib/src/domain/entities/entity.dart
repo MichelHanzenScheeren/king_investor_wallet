@@ -1,3 +1,4 @@
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 
@@ -10,7 +11,9 @@ class Entity {
 
   bool get isValid => validate() is Success;
 
-  Result<Entity, String> validate() => _id.validate().pure(this);
+  String? get errorMessage => validate().exceptionOrNull()?.toString();
+
+  Result<Entity, ValidationException> validate() => _id.validate().pure(this);
 
   @override
   bool operator ==(covariant Entity other) {

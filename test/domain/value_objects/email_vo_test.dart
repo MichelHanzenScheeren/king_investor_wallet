@@ -12,7 +12,7 @@ void main() {
     test('should be invalid when empty string', () {
       final item = EmailVO('');
       expect(item.isValid, isFalse);
-      expect(item.validate().exceptionOrNull(), 'Email inválido');
+      expect(item.errorMessage, equals('Email inválido'));
     });
 
     test('should be invalid when dont have @ symbol', () {

@@ -1,4 +1,5 @@
 import 'package:king_investor_wallet/src/domain/entities/user_data.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/email_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
@@ -19,12 +20,12 @@ class User extends UserData {
   String get email => _email.value;
 
   @override
-  Result<User, String> validate() =>
+  Result<User, ValidationException> validate() =>
       super.validate().flatMap((_) => _email.validate()).pure(this);
 
   @override
-  Result<User, String> update({TextVO? name, EmailVO? email}) {
-    final result = Result<User, String>.success(this)
+  Result<User, ValidationException> update({TextVO? name, EmailVO? email}) {
+    final result = Result<User, ValidationException>.success(this)
         .flatMap((_) => _validateField(email))
         .flatMap((_) => super.update(name: name))
         .pure(this);
@@ -34,6 +35,6 @@ class User extends UserData {
     return Success(this);
   }
 
-  Result<User, String> _validateField(ValueObject<dynamic>? value) =>
+  Result<User, ValidationException> _validateField(ValueObject? value) =>
       value?.validate().pure(this) ?? Success(this);
 }

@@ -1,3 +1,4 @@
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
 abstract class ValueObject<T> {
@@ -7,7 +8,9 @@ abstract class ValueObject<T> {
 
   bool get isValid => validate() is Success;
 
-  Result<ValueObject<T>, String> validate();
+  String? get errorMessage => validate().exceptionOrNull()?.toString();
+
+  Result<ValueObject<T>, ValidationException> validate();
 
   @override
   bool operator ==(covariant ValueObject<T> other) {

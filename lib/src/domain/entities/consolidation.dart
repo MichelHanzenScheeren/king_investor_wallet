@@ -5,6 +5,7 @@ import 'package:king_investor_wallet/src/domain/entities/consolidation_item.dart
 import 'package:king_investor_wallet/src/domain/entities/consolidation_result.dart';
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/enums/category.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
@@ -27,9 +28,16 @@ class Consolidation extends Entity {
   bool get hasInvalidAssets => _invalidAssets.isNotEmpty;
 
   @override
-  Result<Consolidation, String> validate() => _validAssets.isEmpty
-      ? const Failure('Nenhum ativo válido')
-      : Success(this);
+  Result<Consolidation, ValidationException> validate() {
+    if (_validAssets.isNotEmpty) {
+      return Success(this);
+    } else {
+      return ValidationException(
+        type: Consolidation,
+        message: 'Nenhum ativo válido',
+      ).toFailure();
+    }
+  }
 
   void _filterAssets(List<Asset> assets) {
     for (Asset asset in assets) {
@@ -41,9 +49,10 @@ class Consolidation extends Entity {
     }
   }
 
-  Result<ConsolidationResult, String> consolidate() {
-    if (!isValid) {
-      return Failure(validate().exceptionOrNull() ?? '');
+  Result<ConsolidationResult, ValidationException> consolidate() {
+    final validationResult = validate();
+    if (validationResult.isError()) {
+      return Failure(validationResult.exceptionOrNull()!);
     }
     final totalRelatedToAllAssets = _consolidateTotals();
     final totalConsolidation = totalRelatedToAllAssets.totalConsolidation;

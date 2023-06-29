@@ -31,7 +31,7 @@ void main() {
     test('should be invalid if invalid value was passed', () {
       final item = SymbolVO('');
       expect(item.isValid, isFalse);
-      expect(item.validate().exceptionOrNull(), equals('Símbolo inválido'));
+      expect(item.errorMessage, equals('Símbolo inválido'));
     });
   });
 }

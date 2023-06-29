@@ -1,4 +1,5 @@
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
 import 'package:result_dart/result_dart.dart';
@@ -43,7 +44,7 @@ class Quote extends Entity {
   bool get hasValidPrice => _price.isValid;
 
   @override
-  Result<Quote, String> validate() {
+  Result<Quote, ValidationException> validate() {
     return super
         .validate()
         .flatMap((success) => _price.validate().pure(this))

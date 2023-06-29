@@ -2,6 +2,7 @@
 import 'package:king_investor_wallet/src/domain/entities/consolidation_group.dart';
 import 'package:king_investor_wallet/src/domain/entities/consolidation_item.dart';
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ConsolidationResult extends Entity {
@@ -32,7 +33,7 @@ class ConsolidationResult extends Entity {
           _assetsGroupedByCategoryConsolidation);
 
   @override
-  Result<ConsolidationResult, String> validate() {
+  Result<ConsolidationResult, ValidationException> validate() {
     return super
         .validate()
         .flatMap((_) => totalConsolidation.validate())
@@ -42,7 +43,9 @@ class ConsolidationResult extends Entity {
         .pure(this);
   }
 
-  Result<ConsolidationResult, String> _validateList(List<Entity> entities) {
+  Result<ConsolidationResult, ValidationException> _validateList(
+    List<Entity> entities,
+  ) {
     return entities.map((e) => e.validate().pure(this)).firstWhere(
           (element) => element.isError(),
           orElse: () => Success(this),

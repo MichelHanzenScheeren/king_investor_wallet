@@ -2,6 +2,7 @@ import 'package:king_investor_wallet/src/domain/entities/asset.dart';
 import 'package:king_investor_wallet/src/domain/entities/asset_movement.dart';
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/enums/rebalancing_error.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
@@ -28,7 +29,7 @@ class RebalancingResult extends Entity {
   double get purchasedAmount => _purchasedAmount;
 
   @override
-  Result<RebalancingResult, String> validate() {
+  Result<RebalancingResult, ValidationException> validate() {
     return super
         .validate()
         .flatMap((_) => _totalMoney.validate())

@@ -1,3 +1,4 @@
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
@@ -32,7 +33,7 @@ class AssetBase extends Entity {
         super(id: IdVO(symbol.value));
 
   @override
-  Result<AssetBase, String> validate() {
+  Result<AssetBase, ValidationException> validate() {
     return super
         .validate()
         .flatMap((success) => _symbol.validate())
@@ -42,10 +43,16 @@ class AssetBase extends Entity {
         .pure(this);
   }
 
-  Result<AssetBase, String> update({TextVO? name, Category? category}) {
-    if (name != null && !name.isValid) return name.validate().pure(this);
-    _name = name ?? _name;
-    _category = category ?? _category;
-    return Success(this);
+  Result<AssetBase, ValidationException> update({
+    TextVO? name,
+    Category? category,
+  }) {
+    if (name != null && !name.isValid) {
+      return name.validate().pure(this);
+    } else {
+      _name = name ?? _name;
+      _category = category ?? _category;
+      return Success(this);
+    }
   }
 }

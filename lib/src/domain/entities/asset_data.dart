@@ -1,4 +1,5 @@
 import 'package:king_investor_wallet/src/domain/enums/category.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/rating_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/symbol_vo.dart';
@@ -60,7 +61,7 @@ class AssetData extends AssetBase {
   double get rating => _rating.value;
 
   @override
-  Result<AssetData, String> validate() {
+  Result<AssetData, ValidationException> validate() {
     return super
         .validate()
         .flatMap((success) => _quantity.validate())
@@ -71,7 +72,7 @@ class AssetData extends AssetBase {
   }
 
   @override
-  Result<AssetData, String> update({
+  Result<AssetData, ValidationException> update({
     TextVO? name,
     Category? category,
     PositiveIntegerVO? quantity,
@@ -79,7 +80,7 @@ class AssetData extends AssetBase {
     PositiveNumberVO? totalIncomes,
     NumberVO? balanceSales,
   }) {
-    final result = Result<AssetData, String>.success(this)
+    final result = Result<AssetData, ValidationException>.success(this)
         .flatMap((_) => _validate(quantity))
         .flatMap((_) => _validate(averagePrice))
         .flatMap((_) => _validate(totalIncomes))
@@ -96,17 +97,19 @@ class AssetData extends AssetBase {
     return Success(this);
   }
 
-  Result<AssetData, String> _validate(ValueObject<dynamic>? value) =>
+  Result<AssetData, ValidationException> _validate(ValueObject? value) =>
       value?.validate().pure(this) ?? Success(this);
 
-  Result<AssetData, String> registerIncome(PositiveNumberVO newIncome) {
+  Result<AssetData, ValidationException> registerIncome(
+    PositiveNumberVO newIncome,
+  ) {
     final result = newIncome.greaterThanZero().pure(this);
     if (result.isError()) return result;
     _totalIncomes = PositiveNumberVO(_totalIncomes.value + newIncome.value);
     return Success(this);
   }
 
-  Result<AssetData, String> registerPurchase({
+  Result<AssetData, ValidationException> registerPurchase({
     required PositiveIntegerVO transactionQuantity,
     required PositiveNumberVO price,
   }) {
@@ -126,15 +129,17 @@ class AssetData extends AssetBase {
     return validQuantity.flatMap((_) => validPrice);
   }
 
-  Result<AssetData, String> _validateQuantity(PositiveIntegerVO quantity) {
-    return Result<AssetData, String>.success(this)
+  Result<AssetData, ValidationException> _validateQuantity(
+      PositiveIntegerVO quantity) {
+    return Result<AssetData, ValidationException>.success(this)
         .flatMap((_) => quantity.validate())
         .flatMap((_) => quantity.greaterThanZero())
         .pure(this);
   }
 
-  Result<AssetData, String> _validatePrice(PositiveNumberVO price) {
-    return Result<AssetData, String>.success(this)
+  Result<AssetData, ValidationException> _validatePrice(
+      PositiveNumberVO price) {
+    return Result<AssetData, ValidationException>.success(this)
         .flatMap((_) => price.validate())
         .flatMap((_) => price.greaterThanZero())
         .pure(this);
@@ -153,7 +158,7 @@ class AssetData extends AssetBase {
     return newAverage;
   }
 
-  Result<AssetData, String> registerSale({
+  Result<AssetData, ValidationException> registerSale({
     required PositiveIntegerVO transactionQuantity,
     required PositiveNumberVO price,
   }) {
@@ -169,7 +174,7 @@ class AssetData extends AssetBase {
     return validation;
   }
 
-  Result<AssetData, String> _validateSale(
+  Result<AssetData, ValidationException> _validateSale(
     PositiveIntegerVO soldAmount,
     PositiveNumberVO price,
   ) {
@@ -181,7 +186,10 @@ class AssetData extends AssetBase {
     } else if (priceValidation.isError()) {
       return priceValidation;
     } else if (soldAmount.value > _quantity.value) {
-      return const Failure('A quantidade vendida é maior do que a atual');
+      return ValidationException(
+        type: AssetData,
+        message: 'A quantidade vendida é maior do que a atual',
+      ).toFailure();
     } else {
       return Success(this);
     }

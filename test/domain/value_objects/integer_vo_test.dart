@@ -26,7 +26,7 @@ void main() {
       expect(item.value, equals(0));
       expect(item.isValid, isFalse);
       const message = 'Número inteiro inválido';
-      expect(item.validate().exceptionOrNull(), equals(message));
+      expect(item.errorMessage, equals(message));
     });
 
     test('should be invalid when pass double value', () {

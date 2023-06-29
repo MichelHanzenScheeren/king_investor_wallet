@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
 import 'package:result_dart/result_dart.dart';
@@ -50,7 +51,7 @@ class ConsolidationItem extends Entity {
   double get resultPercentage => _resultPercentage.value;
 
   @override
-  Result<ConsolidationItem, String> validate() {
+  Result<ConsolidationItem, ValidationException> validate() {
     return super
         .validate()
         .flatMap((_) => _totalInvested.validate())

@@ -59,7 +59,7 @@ void main() {
         price: PositiveNumberVO(10.4),
       );
       expect(response, isA<Failure>());
-      expect(response.exceptionOrNull(), equals(greaterThanZero));
+      expect(response.exceptionOrNull().toString(), equals(greaterThanZero));
       expect(item.quantity, equals(2));
       expect(item.averagePrice, equals(10.0));
     });
@@ -71,7 +71,7 @@ void main() {
         price: PositiveNumberVO(0),
       );
       expect(response, isA<Failure>());
-      expect(response.exceptionOrNull(), equals(greaterThanZero));
+      expect(response.exceptionOrNull().toString(), equals(greaterThanZero));
       expect(item.quantity, equals(2));
       expect(item.averagePrice, equals(10.0));
     });
@@ -94,7 +94,7 @@ void main() {
         price: PositiveNumberVO(15.0),
       );
       expect(response, isA<Failure>());
-      expect(response.exceptionOrNull(), equals(greaterThanZero));
+      expect(response.exceptionOrNull().toString(), equals(greaterThanZero));
       expect(item.quantity, equals(2));
     });
 
@@ -105,7 +105,7 @@ void main() {
         price: PositiveNumberVO(0),
       );
       expect(response, isA<Failure>());
-      expect(response.exceptionOrNull(), equals(greaterThanZero));
+      expect(response.exceptionOrNull().toString(), equals(greaterThanZero));
       expect(item.quantity, equals(2));
     });
 
@@ -116,7 +116,7 @@ void main() {
         price: PositiveNumberVO(15.0),
       );
       expect(response, isA<Failure>());
-      expect(response.exceptionOrNull(), equals(greaterThanCurrent));
+      expect(response.exceptionOrNull().toString(), equals(greaterThanCurrent));
       expect(item.quantity, equals(2));
     });
 

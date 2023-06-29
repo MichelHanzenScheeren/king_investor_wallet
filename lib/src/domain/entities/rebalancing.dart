@@ -7,6 +7,7 @@ import 'package:king_investor_wallet/src/domain/entities/consolidation_item.dart
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/entities/rebalancing_result.dart';
 import 'package:king_investor_wallet/src/domain/enums/rebalancing_error.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/rating_vo.dart';
@@ -36,7 +37,7 @@ class Rebalancing extends Entity {
       _categoriesRatingGroup.categoriesRating;
 
   @override
-  Result<Rebalancing, String> validate() {
+  Result<Rebalancing, ValidationException> validate() {
     return super
         .validate()
         .flatMap((_) => _categoriesRatingGroup.validate())
@@ -45,7 +46,7 @@ class Rebalancing extends Entity {
         .pure(this);
   }
 
-  Result<RebalancingResult, String> rebalance() {
+  Result<RebalancingResult, ValidationException> rebalance() {
     return validate().flatMap((_) => Success(_rebalance()));
   }
 

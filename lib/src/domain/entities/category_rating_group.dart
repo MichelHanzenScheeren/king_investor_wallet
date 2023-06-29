@@ -1,6 +1,7 @@
 import 'package:king_investor_wallet/src/domain/entities/category_rating.dart';
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
 import 'package:king_investor_wallet/src/domain/enums/category.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
 class CategoryRatingGroup extends Entity {
@@ -40,11 +41,11 @@ class CategoryRatingGroup extends Entity {
   }
 
   @override
-  Result<CategoryRatingGroup, String> validate() {
+  Result<CategoryRatingGroup, ValidationException> validate() {
     return super.validate().flatMap((_) => _localValidate()).pure(this);
   }
 
-  Result<CategoryRatingGroup, String> _localValidate() {
+  Result<CategoryRatingGroup, ValidationException> _localValidate() {
     return _categoriesRating.map((e) => e.validate().pure(this)).firstWhere(
           (element) => element.isError(),
           orElse: () => Success(this),

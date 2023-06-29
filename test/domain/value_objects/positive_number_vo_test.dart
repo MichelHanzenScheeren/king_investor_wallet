@@ -13,7 +13,7 @@ void main() {
       final item = PositiveNumberVO('a');
       expect(item.value, equals(0.0));
       expect(item.isValid, isFalse);
-      expect(item.validate().exceptionOrNull(), equals('Número inválido'));
+      expect(item.errorMessage, equals('Número inválido'));
     });
 
     test('should be invalid if negative double with class validation', () {
@@ -21,13 +21,16 @@ void main() {
       expect(item.value, equals(0.0));
       expect(item.isValid, isFalse);
       const message = 'Número não pode ser negativo';
-      expect(item.validate().exceptionOrNull(), equals(message));
+      expect(item.errorMessage, equals(message));
     });
 
     test('should return failure when call greaterThanZero and value == 0', () {
       final item = PositiveNumberVO(0);
       const message = 'Valor deve ser maior do que zero';
-      expect(item.greaterThanZero().exceptionOrNull(), equals(message));
+      expect(
+        item.greaterThanZero().exceptionOrNull().toString(),
+        equals(message),
+      );
     });
   });
 }

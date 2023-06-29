@@ -20,7 +20,7 @@ void main() {
     test('should be invalid when have invalid attribute', () {
       final item = invalidAssetBaseHGRU11EmptyCurrency();
       expect(item.isValid, isFalse);
-      expect(item.validate().exceptionOrNull(), equals('Símbolo inválido'));
+      expect(item.errorMessage, equals('Símbolo inválido'));
     });
 
     test('should correct update when call update() with valid new values', () {

@@ -1,3 +1,4 @@
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/value_object.dart';
 
@@ -6,6 +7,14 @@ class SymbolVO extends ValueObject<String> {
       : super(value.replaceAll(RegExp('[.|,|:|;|-|/| ].*'), '').toUpperCase());
 
   @override
-  Result<SymbolVO, String> validate() =>
-      value.length >= 3 ? Success(this) : const Failure('Símbolo inválido');
+  Result<SymbolVO, ValidationException> validate() {
+    if (value.length >= 3) {
+      return Success(this);
+    } else {
+      return ValidationException(
+        type: SymbolVO,
+        message: 'Símbolo inválido',
+      ).toFailure();
+    }
+  }
 }

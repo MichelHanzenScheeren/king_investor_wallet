@@ -1,6 +1,7 @@
 import 'package:king_investor_wallet/src/domain/entities/asset_data.dart';
 import 'package:king_investor_wallet/src/domain/entities/quote.dart';
 import 'package:king_investor_wallet/src/domain/enums/category.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/number_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
@@ -71,7 +72,7 @@ class Asset extends AssetData {
         );
 
   @override
-  Result<AssetData, String> validate() {
+  Result<AssetData, ValidationException> validate() {
     return super.validate().flatMap((success) => quote.validate()).pure(this);
   }
 }

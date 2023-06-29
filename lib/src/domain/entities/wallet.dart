@@ -1,6 +1,7 @@
 import 'package:king_investor_wallet/src/domain/entities/asset.dart';
 import 'package:king_investor_wallet/src/domain/entities/category_rating_group.dart';
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -30,7 +31,7 @@ class Wallet extends Entity {
   CategoryRatingGroup get categoriesRatings => _categoriesRatings;
 
   @override
-  Result<Wallet, String> validate() {
+  Result<Wallet, ValidationException> validate() {
     return super
         .validate()
         .flatMap((_) => _name.validate())
@@ -38,7 +39,7 @@ class Wallet extends Entity {
         .pure(this);
   }
 
-  Result<Wallet, String> update({
+  Result<Wallet, ValidationException> update({
     TextVO? name,
     bool? isDefault,
   }) {
@@ -48,11 +49,14 @@ class Wallet extends Entity {
     return Success(this);
   }
 
-  Result<Wallet, String> addAsset(Asset newAsset) {
+  Result<Wallet, ValidationException> addAsset(Asset newAsset) {
     if (!newAsset.isValid) {
       return newAsset.validate().pure(this);
     } else if (_assets.contains(newAsset)) {
-      return Failure('O ativo já esta cadastrado (${newAsset.symbol})');
+      return ValidationException(
+        type: Wallet,
+        message: 'O ativo já esta cadastrado (${newAsset.symbol})',
+      ).toFailure();
     }
     _assets.add(newAsset);
     return Success(this);

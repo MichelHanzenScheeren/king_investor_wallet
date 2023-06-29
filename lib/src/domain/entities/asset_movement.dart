@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:king_investor_wallet/src/domain/entities/entity.dart';
+import 'package:king_investor_wallet/src/domain/exceptions/validation_exception.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_integer_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/positive_number_vo.dart';
@@ -26,7 +27,7 @@ class AssetMovement extends Entity {
   double get total => price * quantity;
 
   @override
-  Result<AssetMovement, String> validate() => super
+  Result<AssetMovement, ValidationException> validate() => super
       .validate()
       .flatMap((_) => _symbol.validate())
       .flatMap((_) => _price.validate())
