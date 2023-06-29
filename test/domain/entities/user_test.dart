@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/email_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:result_dart/result_dart.dart';
-
 import '../../mocks/domain/entities/users.dart';
 
 void main() {
@@ -25,12 +24,23 @@ void main() {
       expect(item.name, equals(newName.value));
     });
 
-    test('should not update if invalid data was passed', () {
+    test('should not update if invalid name was passed', () {
       final item = validUser1();
       final initialEmail = item.email;
       final result = item.update(
         name: TextVO(''),
         email: EmailVO('teste@teste'),
+      );
+      expect(result, isA<Failure>());
+      expect(item.email, equals(initialEmail));
+    });
+
+    test('should not update if invalid email was passed', () {
+      final item = validUser1();
+      final initialEmail = item.email;
+      final result = item.update(
+        name: TextVO('Meu nome'),
+        email: EmailVO('teste'),
       );
       expect(result, isA<Failure>());
       expect(item.email, equals(initialEmail));

@@ -1,40 +1,35 @@
-import 'package:king_investor_wallet/src/domain/entities/entity.dart';
+import 'package:king_investor_wallet/src/domain/entities/user_data.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/email_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/id_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/text_vo.dart';
 import 'package:king_investor_wallet/src/domain/value_objects/value_object.dart';
 import 'package:result_dart/result_dart.dart';
 
-class User extends Entity {
-  TextVO _name;
+class User extends UserData {
   EmailVO _email;
 
   User(
       {super.id,
-      required TextVO name,
       required EmailVO email,
+      required TextVO name,
       IdVO? sessionToken})
-      : _name = name,
-        _email = email;
+      : _email = email,
+        super(name: name);
 
-  String get name => _name.value;
   String get email => _email.value;
 
   @override
-  Result<User, String> validate() => super
-      .validate()
-      .flatMap((_) => _name.validate())
-      .flatMap((_) => _email.validate())
-      .pure(this);
+  Result<User, String> validate() =>
+      super.validate().flatMap((_) => _email.validate()).pure(this);
 
+  @override
   Result<User, String> update({TextVO? name, EmailVO? email}) {
     final result = Result<User, String>.success(this)
-        .flatMap((_) => _validateField(name))
         .flatMap((_) => _validateField(email))
+        .flatMap((_) => super.update(name: name))
         .pure(this);
     if (result.isError()) return result;
 
-    _name = name ?? _name;
     _email = email ?? _email;
     return Success(this);
   }
